@@ -119,8 +119,10 @@ create table F_SINGLE_PLAYER_GAME(
 
 create or replace function get_hash (p_password  IN  VARCHAR2)
     RETURN VARCHAR2 AS
+    l_salt VARCHAR2(30) := 'dm9u84FHaPWfv0pTFqSJuiK356aFAC';
   BEGIN
-    RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password),DBMS_CRYPTO.HASH_SH1);
+    RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password || l_salt),DBMS_CRYPTO.HASH_SH1);
   END;
 
 commit;
+

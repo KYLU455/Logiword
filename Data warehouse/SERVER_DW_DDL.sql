@@ -1,3 +1,9 @@
+drop sequence D_PLAYER_PLAYER_ID;
+drop sequence D_PLAYER_ROW_ID;
+drop sequence D_MULTIPLAYER_GAME_ID;
+drop sequence D_DAILY_CHALLENGE_ID;
+drop sequence D_SINGLE_PLAYER_ID;
+
 drop table F_MULTIPLAYER_GAME_MOVE;
 drop table F_MULTIPLAYER_GAME_RESULTS;
 drop table F_DAILY_CHALLENGE_ATTEMPT;
@@ -8,14 +14,33 @@ drop table D_MULTIPLAYER_GAME;
 drop table D_DAILY_CHALLENGE;
 drop table D_SINGLE_PLAYER_GAME;
 
+CREATE SEQUENCE D_PLAYER_ROW_ID
+    INCREMENT BY 1
+    START WITH 1
+    MINVALUE 1
+    NOMAXVALUE;
+
+CREATE SEQUENCE D_PLAYER_PLAYER_ID
+    INCREMENT BY 1
+    START WITH 1
+    MINVALUE 1
+    NOMAXVALUE;
+
 create table D_PLAYER(
-    id number not null,
+    row_id number not null,
+    player_id number not null unique,
     player_name varchar2(32) not null,
     mail varchar2(32) not null check (mail like '%@%'),
     valid_from date not null,
     valid_to date,
-    constraint d_player_id_pk primary key (id)
+    constraint d_player_id_pk primary key (row_id)
 );
+
+CREATE SEQUENCE D_DAILY_CHALLENGE_ID
+    INCREMENT BY 1
+    START WITH 1
+    MINVALUE 1
+    NOMAXVALUE;
 
 create table D_DAILY_CHALLENGE(
     id number not null,
@@ -34,7 +59,12 @@ create table F_DAILY_CHALLENGE_ATTEMPT(
     constraint f_daily_challenge_fk_d_daily_challenge foreign key (challenge_id) references D_DAILY_CHALLENGE
 )pctfree 0;
 
--- consider cluster these 2
+CREATE SEQUENCE D_MULTIPLAYER_GAME_ID
+    INCREMENT BY 1
+    START WITH 1
+    MINVALUE 1
+    NOMAXVALUE;
+
 create table D_MULTIPLAYER_GAME(
     id number not null,
     is_friend_duel char(1) check ( is_friend_duel in ('Y', 'N')) not null,
@@ -64,6 +94,12 @@ create table F_MULTIPLAYER_GAME_MOVE(
     constraint f_multiplayer_game_move_fk_d_player foreign key (player_id) references D_PLAYER
 )pctfree 0;
 
+CREATE SEQUENCE D_SINGLE_PLAYER_ID
+    INCREMENT BY 1
+    START WITH 1
+    MINVALUE 1
+    NOMAXVALUE;
+
 create table D_SINGLE_PLAYER_GAME(
     id number not null,
     start_time date not null,
@@ -80,3 +116,11 @@ create table F_SINGLE_PLAYER_GAME(
     constraint f_single_player_game_fk_d_single_player_game foreign key (game_id) references D_SINGLE_PLAYER_GAME,
     constraint f_single_player_game_fk_d_player foreign key (player_id) references D_PLAYER
 )pctfree 0;
+
+create or replace function get_hash (p_password  IN  VARCHAR2)
+    RETURN VARCHAR2 AS
+  BEGIN
+    RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password),DBMS_CRYPTO.HASH_SH1);
+  END;
+
+commit;

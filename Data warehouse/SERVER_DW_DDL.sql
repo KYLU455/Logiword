@@ -8,6 +8,7 @@ drop table F_MULTIPLAYER_GAME_MOVE;
 drop table F_MULTIPLAYER_GAME_RESULTS;
 drop table F_DAILY_CHALLENGE_ATTEMPT;
 drop table F_SINGLE_PLAYER_GAME;
+drop table F_FRIEND;
 
 drop table D_PLAYER;
 drop table D_MULTIPLAYER_GAME;
@@ -30,11 +31,19 @@ create table D_PLAYER(
     row_id number not null,
     player_id number not null unique,
     player_name varchar2(32) not null,
+    password VARCHAR2(40) not null,
     mail varchar2(32) not null check (mail like '%@%'),
     valid_from date not null,
     valid_to date,
     constraint d_player_id_pk primary key (row_id)
 );
+
+create table F_FRIEND(
+    player1_id number not null,
+    player2_id number not null,
+    constraint f_friend_player1_fk_d_player foreign key (player1_id) references D_PLAYER,
+    constraint f_friend_player2_fk_d_player foreign key (player2_id) references D_PLAYER
+)pctfree 0;
 
 CREATE SEQUENCE D_DAILY_CHALLENGE_ID
     INCREMENT BY 1

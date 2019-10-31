@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "443435237660",
+    "firebase_url": "https://logiword-1c4aa.firebaseio.com",
+    "project_id": "logiword-1c4aa",
+    "storage_bucket": "logiword-1c4aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443435237660:android:d04aaeedcbea1c2ac4fad9",
+        "android_client_info": {
+          "package_name": "com.kyluandkylu.android.logiword"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443435237660-egj3vvd2jsos46q20sf4caps2otui2sq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPDXSB4MTgzL8v58ErNkR4y7vIbRYL1Qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443435237660-egj3vvd2jsos46q20sf4caps2otui2sq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

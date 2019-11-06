@@ -1,7 +1,6 @@
 package com.kyluandkylu.android.logiword;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -30,7 +29,7 @@ public class GameFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_game, container, true);
+        return inflater.inflate(R.layout.game_fragment, container, true);
     }
 
     @Override

@@ -12,6 +12,22 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/profile" />
+        <item
+            android:id="@+id/nav_scores"
+            android:icon="@drawable/ic_scores_icon"
+            android:title="Scores" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_friend_list"
+            android:icon="@drawable/ic_friend_list"
+            android:title="Friend List" />
+        <item
+            android:id="@+id/nav_single_player"
+            android:icon="@drawable/ic_single_player"
+            android:title="Single Player" />
     </group>
 
 </menu>

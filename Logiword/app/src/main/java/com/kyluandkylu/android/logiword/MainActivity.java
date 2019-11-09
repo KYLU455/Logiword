@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_friend_list:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FriendListFragment()).commit();
                 break;
+            case R.id.nav_single_player:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GameFragment()).commit();
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

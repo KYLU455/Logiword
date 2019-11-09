@@ -24,6 +24,10 @@
             android:id="@+id/nav_friend_list"
             android:icon="@drawable/ic_friend_list"
             android:title="Friend List" />
+        <item
+            android:id="@+id/nav_single_player"
+            android:icon="@drawable/ic_single_player"
+            android:title="Single Player" />
     </group>
 
 </menu>

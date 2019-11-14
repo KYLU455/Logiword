@@ -1,18 +1,25 @@
 package com.kyluandkylu.android.logiword.ViewModel;
 
+import android.app.Application;
 import android.text.SpannableString;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
-public class GameViewModel extends ViewModel {
+public class GameViewModel extends AndroidViewModel {
 
     private MutableLiveData<Integer> currentVal;
     private MutableLiveData<String> currentValText;
@@ -20,14 +27,40 @@ public class GameViewModel extends ViewModel {
     private MutableLiveData<String> currentWord;
     private ArrayList<Move> moves;
 
-    public GameViewModel(){
+    private TreeSet<String> words;
+
+    public GameViewModel(@NonNull Application application){
+        super(application);
         currentVal = new MutableLiveData<>();
         currentVal.setValue(0);
         currentValText = new MutableLiveData<>();
         currentValText.setValue("0");
         currentLetters = new MutableLiveData<>();
         currentLetters.setValue(new ArrayList<Character>());
+        currentWord = new MutableLiveData<>();
+        currentWord.setValue("Your word");
+        try {
+            words = WordList.getWords(application.getAssets().open("words_alpha.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         moves = new ArrayList<>();
+    }
+
+
+    public MutableLiveData<String> getCurrentWord() {
+        return currentWord;
+    }
+
+    public boolean isCurrentWordValid(){
+        return words.contains(currentWord.getValue().toLowerCase()) && currentWord.getValue().length() >= 3;
+    }
+
+    private void addLetterToWord(char letter){
+        if(currentWord.getValue().equals("Your word")){
+            currentWord.setValue("");
+        }
+        currentWord.setValue(currentWord.getValue() + letter);
     }
 
     public MutableLiveData<ArrayList<Character>> getCurrentLetters() {
@@ -40,7 +73,8 @@ public class GameViewModel extends ViewModel {
     }
 
     public void selectLetter(int index){
-        char sellected = currentLetters.getValue().remove(index);
+        char selected = currentLetters.getValue().remove(index);
+        addLetterToWord(selected);
         currentLetters.setValue(currentLetters.getValue());
     }
 

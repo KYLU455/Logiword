@@ -96,7 +96,24 @@ public class GameFragment extends Fragment {
             }
         });
 
+        gameViewModel.getCurrentWord().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
 
+                if(gameViewModel.isCurrentWordValid()){
+                    SpannableString spannableString = new SpannableString(s);
+                    spannableString.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(@NonNull View widget) {
+
+                        }
+                    },0, spannableString.length(),SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    textViewYourWord.setText(spannableString);
+                }else {
+                    textViewYourWord.setText(s);
+                }
+            }
+        });
 
         constraintLayoutButtons = view.findViewById(R.id.constraintLayoutButtons);
 

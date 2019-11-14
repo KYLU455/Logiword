@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword;
+package com.kyluandkylu.android.logiword.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,16 +17,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.kyluandkylu.android.logiword.FriendList.FriendListFragment;
+import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
+import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
+import com.kyluandkylu.android.logiword.R;
+import com.kyluandkylu.android.logiword.Score.ScoreFragment;
+import com.kyluandkylu.android.logiword.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -67,21 +74,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                toolbar.setTitle(R.string.profileString);
                 break;
             case R.id.nav_menu:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenu()).commit();
+                toolbar.setTitle(R.string.mainMenuString);
                 break;
             case R.id.nav_scores:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScoreFragment()).commit();
+                toolbar.setTitle(R.string.scoresString);
                 break;
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+                toolbar.setTitle(R.string.settingsString);
                 break;
             case R.id.nav_friend_list:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FriendListFragment()).commit();
+                toolbar.setTitle(R.string.friendListString);
                 break;
             case R.id.nav_single_player:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GameFragment()).commit();
+                toolbar.setTitle(R.string.singlePlayerString);
                 break;
         }
 

@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword;
+package com.kyluandkylu.android.logiword.View;
 
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.ViewModel.GameViewModel;
 
 import java.util.ArrayList;

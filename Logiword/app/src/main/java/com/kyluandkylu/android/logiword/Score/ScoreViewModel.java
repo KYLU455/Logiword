@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword.ViewModel;
+package com.kyluandkylu.android.logiword.Score;
 
 import androidx.lifecycle.ViewModel;
 

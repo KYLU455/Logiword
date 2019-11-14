@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="menu">Menu</string>
     <string name="profile">Profile</string>
+    <string name="mainMenuString">Main Menu</string>
+    <string name="profileString">Profile</string>
+    <string name="scoresString">Scores</string>
+    <string name="settingsString">Settings</string>
+    <string name="friendListString">Friend List</string>
+    <string name="singlePlayerString">Single Player</string>
+    <string name="multiplayerString">Multiplayer</string>
 </resources>

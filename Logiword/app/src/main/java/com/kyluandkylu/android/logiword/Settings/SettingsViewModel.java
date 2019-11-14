@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword.ViewModel;
+package com.kyluandkylu.android.logiword.Settings;
 
 import androidx.lifecycle.ViewModel;
 

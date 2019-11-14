@@ -3,14 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_green_light"
-    tools:context=".MainMenu">
+    android:background="#C4C4C4"
+    tools:context=".MainMenu.MainMenu">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Main Menu"
+    <Button
+        android:id="@+id/single_player_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="85dp"
+        android:background="@drawable/round_button_style"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/singlePlayerString"
+        android:textSize="32sp" />
+
+    <Button
+        android:id="@+id/multi_player_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/round_button_style"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/multiplayerString"
         android:textSize="32sp" />
 
 </FrameLayout>

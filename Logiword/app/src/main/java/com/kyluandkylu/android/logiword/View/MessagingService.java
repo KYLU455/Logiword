@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword;
+package com.kyluandkylu.android.logiword.View;
 
 import android.util.Log;
 

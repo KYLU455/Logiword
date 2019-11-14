@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword;
+package com.kyluandkylu.android.logiword.FriendList;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -12,26 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kyluandkylu.android.logiword.ViewModel.SettingsViewModel;
+import com.kyluandkylu.android.logiword.R;
 
-public class SettingsFragment extends Fragment {
+public class FriendListFragment extends Fragment {
 
-    private SettingsViewModel mViewModel;
+    private FriendListViewModel mViewModel;
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
+    public static FriendListFragment newInstance() {
+        return new FriendListFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.settings_fragment, container, false);
+        return inflater.inflate(R.layout.friend_list_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(SettingsViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(FriendListViewModel.class);
         // TODO: Use the ViewModel
     }
 

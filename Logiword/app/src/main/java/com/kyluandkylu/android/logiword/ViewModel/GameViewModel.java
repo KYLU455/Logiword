@@ -1,5 +1,11 @@
 package com.kyluandkylu.android.logiword.ViewModel;
 
+import android.text.SpannableString;
+import android.text.style.ClickableSpan;
+import android.util.Log;
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,7 +16,8 @@ public class GameViewModel extends ViewModel {
 
     private MutableLiveData<Integer> currentVal;
     private MutableLiveData<String> currentValText;
-    private MutableLiveData<String> currentLetters;
+    private MutableLiveData<ArrayList<Character>> currentLetters;
+    private MutableLiveData<String> currentWord;
     private ArrayList<Move> moves;
 
     public GameViewModel(){
@@ -19,21 +26,22 @@ public class GameViewModel extends ViewModel {
         currentValText = new MutableLiveData<>();
         currentValText.setValue("0");
         currentLetters = new MutableLiveData<>();
-        currentLetters.setValue("Your Letters");
+        currentLetters.setValue(new ArrayList<Character>());
         moves = new ArrayList<>();
     }
 
-    public MutableLiveData<String> getCurrentLetters() {
+    public MutableLiveData<ArrayList<Character>> getCurrentLetters() {
         return currentLetters;
     }
 
     public void addLetter(char letter){
-        String current = currentLetters.getValue();
-        if (current.equals("Your Letters")){
-            currentLetters.setValue((letter + "").toUpperCase());
-        }else {
-            currentLetters.setValue(current + " " + letter);
-        }
+        currentLetters.getValue().add(letter);
+        currentLetters.setValue(currentLetters.getValue());
+    }
+
+    public void selectLetter(int index){
+        char sellected = currentLetters.getValue().remove(index);
+        currentLetters.setValue(currentLetters.getValue());
     }
 
     public MutableLiveData<String> getCurrentValText(){
@@ -77,4 +85,6 @@ public class GameViewModel extends ViewModel {
         }
         moves.add(new Calculation(type, v, val));
     }
+
+
 }

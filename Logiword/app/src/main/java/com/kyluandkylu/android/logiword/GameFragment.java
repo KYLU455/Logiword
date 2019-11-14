@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.kyluandkylu.android.logiword.ViewModel.GameViewModel;
 
+import java.util.ArrayList;
+
 public class GameFragment extends Fragment {
 
     private TextView textViewYourWord;
@@ -46,9 +48,11 @@ public class GameFragment extends Fragment {
 
         textViewYourLetters = view.findViewById(R.id.textViewYourLetters);
         textViewYourLetters.setText("Your letters");
+        textViewYourLetters.setMovementMethod(LinkMovementMethod.getInstance());
 
         textViewCurrentNumber = view.findViewById(R.id.textViewCurrentNumber);
         textViewAlphabet = view.findViewById(R.id.textViewAlphabet);
+        textViewAlphabet.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
@@ -66,14 +70,28 @@ public class GameFragment extends Fragment {
             public void onChanged(Integer integer) {
                 gameViewModel.changeCurrentValText(integer.toString());
                 textViewAlphabet.setText(numberToSpan(integer));
-                textViewAlphabet.setMovementMethod(LinkMovementMethod.getInstance());
+
             }
         });
 
-        gameViewModel.getCurrentLetters().observe(this, new Observer<String>() {
+        gameViewModel.getCurrentLetters().observe(this, new Observer<ArrayList<Character>>() {
             @Override
-            public void onChanged(String s) {
-                textViewYourLetters.setText(s);
+            public void onChanged(ArrayList<Character> s) {
+                if(s.size() == 0){
+                    textViewYourLetters.setText("Your letters");
+                }else {
+                    String letters = "";
+                    for(Character c : s){
+                        letters += c + " ";
+                    }
+                    letters = letters.substring(0, letters.length() - 1);
+                    SpannableString spannableString = new SpannableString(letters);
+                    for(int a = 0 ; a < s.size(); a++){
+                        spannableString.setSpan(new LetterSelectionClickableSpan(a), a * 2, a * 2 + 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                    textViewYourLetters.setText(spannableString);
+                }
+                gameViewModel.changeVal(0);
             }
         });
 
@@ -128,17 +146,32 @@ public class GameFragment extends Fragment {
 
     private SpannableString numberToSpan(int n) {
         final String alphabet = getResources().getString(R.string.alphabet);
+        final int finalN = n;
         SpannableString span = new SpannableString(alphabet);
         if (n > 0 && n < alphabet.length()) {
             ClickableSpan clickSpan = new ClickableSpan() {
                 @Override
                 public void onClick(View yourTextView) {
-                    //gameViewModel.addLetter(alphabet.charAt(n));
-
+                    gameViewModel.addLetter(alphabet.charAt(finalN - 1));
                 }
             };
             span.setSpan(clickSpan, n - 1, n, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return span;
+    }
+
+
+    private class LetterSelectionClickableSpan extends ClickableSpan{
+
+        private int index;
+
+        public LetterSelectionClickableSpan(int index){
+            this.index = index;
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            gameViewModel.selectLetter(index);
+        }
     }
 }

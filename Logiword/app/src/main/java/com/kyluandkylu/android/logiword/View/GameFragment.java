@@ -105,7 +105,7 @@ public class GameFragment extends Fragment {
                     spannableString.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View widget) {
-
+                            // TODO: 14-Nov-19 IMPLEMENT ON WORD SUBMIT
                         }
                     },0, spannableString.length(),SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
                     textViewYourWord.setText(spannableString);
@@ -134,7 +134,14 @@ public class GameFragment extends Fragment {
         if(buttonText.equals("+/-")){
             gameViewModel.negateVal();
         }else if(buttonText.equals("CE")){
-            //// TODO: 07-Nov-19 implement
+            gameViewModel.restarVal();
+        }else if(buttonText.equals("R")){
+            gameViewModel.restartWord();
+        }else if(buttonText.equals("<<")){
+            gameViewModel.removeLeftDigit();
+        }
+        else if(buttonText.equals(">>")){
+            gameViewModel.removeRightDigit();
         }
         else {
             String currentNumberSt = gameViewModel.getCurrentValText().getValue();

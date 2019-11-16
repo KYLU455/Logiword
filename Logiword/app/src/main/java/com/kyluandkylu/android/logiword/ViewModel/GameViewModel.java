@@ -47,6 +47,25 @@ public class GameViewModel extends AndroidViewModel {
         moves = new ArrayList<>();
     }
 
+    public void removeLeftDigit(){
+        int current = currentVal.getValue();
+        if(current >= 10){
+            String temp = Integer.toString(current);
+            current = Integer.parseInt(temp.substring(0, temp.length() - 1));
+            moves.add(new Calculation("<<",currentVal.getValue(), current));
+            currentVal.setValue(current);
+        }
+    }
+
+    public void removeRightDigit(){
+        int current = currentVal.getValue();
+        if(current >= 10){
+            String temp = Integer.toString(current);
+            current = Integer.parseInt(temp.substring(1));
+            moves.add(new Calculation(">>",currentVal.getValue(), current));
+            currentVal.setValue(current);
+        }
+    }
 
     public MutableLiveData<String> getCurrentWord() {
         return currentWord;
@@ -61,6 +80,10 @@ public class GameViewModel extends AndroidViewModel {
             currentWord.setValue("");
         }
         currentWord.setValue(currentWord.getValue() + letter);
+    }
+
+    public void restartWord(){
+        currentWord.setValue("Your word");
     }
 
     public MutableLiveData<ArrayList<Character>> getCurrentLetters() {
@@ -94,7 +117,13 @@ public class GameViewModel extends AndroidViewModel {
         currentVal.setValue(newVal);
     }
 
+    public void restarVal(){
+        moves.add(new Calculation("R", currentVal.getValue(), 0));
+        currentVal.setValue(0);
+    }
+
     public void negateVal(){
+        moves.add(new Calculation("+/-", currentVal.getValue(), currentVal.getValue() * -1));
         currentVal.setValue(currentVal.getValue() * -1);
     }
 

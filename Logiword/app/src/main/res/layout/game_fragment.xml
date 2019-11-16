@@ -202,7 +202,7 @@
             android:id="@+id/button21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="p1"
+            android:text="CE"
             app:layout_constraintStart_toStartOf="@+id/button17"
             app:layout_constraintTop_toBottomOf="@+id/button17" />
 
@@ -210,7 +210,7 @@
             android:id="@+id/button22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="p2"
+            android:text="&gt;&gt;"
             app:layout_constraintStart_toEndOf="@+id/button21"
             app:layout_constraintTop_toBottomOf="@+id/button18" />
 
@@ -218,7 +218,7 @@
             android:id="@+id/button23"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="'?'"
+            android:text="&lt;&lt;"
             app:layout_constraintStart_toEndOf="@+id/button22"
             app:layout_constraintTop_toBottomOf="@+id/button19" />
 
@@ -226,7 +226,7 @@
             android:id="@+id/button24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="'?'"
+            android:text="R"
             app:layout_constraintStart_toEndOf="@+id/button23"
             app:layout_constraintTop_toBottomOf="@+id/button20" />
 

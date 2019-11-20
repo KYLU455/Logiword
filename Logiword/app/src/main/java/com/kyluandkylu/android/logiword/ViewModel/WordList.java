@@ -17,7 +17,7 @@ public class WordList {
         this.wordsTree = wordsTree;
     }
 
-    public static TreeSet<String> getWords(InputStream inputStream){
+    public static TreeSet<String> getWordsInit(InputStream inputStream){
         TreeSet<String> words = new TreeSet<>();
         if(wordList == null && inputStream != null){
             try {
@@ -31,6 +31,10 @@ public class WordList {
             }
             wordList = new WordList(words);
         }
+        return wordsTree;
+    }
+
+    public static TreeSet<String> getWords(){
         return wordsTree;
     }
 }

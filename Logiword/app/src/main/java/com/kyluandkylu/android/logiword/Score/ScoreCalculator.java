@@ -20,7 +20,8 @@ public class ScoreCalculator {
                     case "+/-":
                         scores = scores - 2000;
                         break;
-                    case "R":
+                    case "CE":
+                        scores = scores - 6000;
                         break;
                     default:
                         scores = scores - 5000;

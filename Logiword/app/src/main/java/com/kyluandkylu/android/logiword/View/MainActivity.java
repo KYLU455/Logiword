@@ -23,6 +23,9 @@ import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Score.ScoreFragment;
 import com.kyluandkylu.android.logiword.Settings.SettingsFragment;
+import com.kyluandkylu.android.logiword.ViewModel.WordList;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -32,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            WordList.getWordsInit(getApplication().getAssets().open("words_alpha.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

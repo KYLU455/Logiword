@@ -3,6 +3,7 @@ package com.kyluandkylu.android.logiword.MainMenu;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class MainMenu extends Fragment {
     private MainMenuViewModel mViewModel;
     private FragmentTransaction ft;
     private Button singleButton;
+    private Button dailyChallengeButton;
 
     public static MainMenu newInstance() {
         return new MainMenu();
@@ -52,10 +54,19 @@ public class MainMenu extends Fragment {
             @Override
             public void onClick(View view) {
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-                ft.replace(R.id.fragment_container, new GameFragment()).commit();
+                ft.replace(R.id.fragment_container, new GameFragment()).addToBackStack(null).commit();
             }
         });
 
+        dailyChallengeButton = view.findViewById(R.id.daily_challenge_button);
+        dailyChallengeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+                // TODO: 20-Nov-19 add get day
+                ft.replace(R.id.fragment_container, new GameFragment("day")).addToBackStack(null).commit();
+            }
+        });
     }
 
 

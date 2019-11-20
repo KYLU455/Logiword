@@ -28,6 +28,7 @@ public class GameViewModel extends AndroidViewModel {
     private ArrayList<Move> moves;
 
     private TreeSet<String> words;
+    private String yourWordText;
 
     public GameViewModel(@NonNull Application application){
         super(application);
@@ -38,12 +39,8 @@ public class GameViewModel extends AndroidViewModel {
         currentLetters = new MutableLiveData<>();
         currentLetters.setValue(new ArrayList<Character>());
         currentWord = new MutableLiveData<>();
-        currentWord.setValue("Your word");
-        try {
-            words = WordList.getWords(application.getAssets().open("words_alpha.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        currentWord.setValue(yourWordText);
+        words = WordList.getWords();
         moves = new ArrayList<>();
     }
 
@@ -72,23 +69,30 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public boolean isCurrentWordValid(){
-        return words.contains(currentWord.getValue().toLowerCase()) && currentWord.getValue().length() >= 3;
+        if(yourWordText.equals("Your word")){
+            return words.contains(currentWord.getValue().toLowerCase()) && currentWord.getValue().length() >= 3;
+        }else{
+            return currentWord.getValue().toLowerCase().equals(yourWordText.toLowerCase()) && moves.size() > 0;
+        }
+
     }
 
     private void addLetterToWord(char letter){
-        if(currentWord.getValue().equals("Your word")){
+        if(currentWord.getValue().equals(yourWordText)){
             currentWord.setValue("");
         }
         currentWord.setValue(currentWord.getValue() + letter);
     }
 
     public void restartWord(){
-        String old = currentWord.getValue();
-        for(char c : old.toCharArray()){
-            currentLetters.getValue().add(c);
+        if(!currentWord.getValue().toLowerCase().equals(yourWordText.toLowerCase())){
+            String old = currentWord.getValue();
+            for(char c : old.toCharArray()){
+                currentLetters.getValue().add(c);
+            }
+            currentLetters.setValue(currentLetters.getValue());
+            currentWord.setValue(yourWordText);
         }
-        currentLetters.setValue(currentLetters.getValue());
-        currentWord.setValue("Your word");
     }
 
     public MutableLiveData<ArrayList<Character>> getCurrentLetters() {
@@ -124,7 +128,7 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void restartVal(){
-        moves.add(new Calculation("R", currentVal.getValue(), 0));
+        moves.add(new Calculation("CE", currentVal.getValue(), 0));
         currentVal.setValue(0);
     }
 
@@ -146,7 +150,10 @@ public class GameViewModel extends AndroidViewModel {
                 currentVal.setValue(v * val);
                 break;
             case "/":
-                currentVal.setValue(v / val);
+                // TODO: 20-Nov-19 Remove 0
+                if(val != 0){
+                    currentVal.setValue(v / val);
+                }
                 break;
             case "^":
                 currentVal.setValue((int) (Math.pow(v, val)));
@@ -157,5 +164,10 @@ public class GameViewModel extends AndroidViewModel {
 
     public ArrayList<Move> getMoves() {
         return moves;
+    }
+
+    public void setYourWordText(String yourWordText) {
+        this.yourWordText = yourWordText;
+        currentWord.setValue(yourWordText);
     }
 }

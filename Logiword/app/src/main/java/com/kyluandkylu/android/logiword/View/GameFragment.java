@@ -2,6 +2,7 @@ package com.kyluandkylu.android.logiword.View;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -26,6 +28,7 @@ import com.kyluandkylu.android.logiword.Score.ScoreCalculator;
 import com.kyluandkylu.android.logiword.ViewModel.GameViewModel;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameFragment extends Fragment {
 
@@ -37,6 +40,16 @@ public class GameFragment extends Fragment {
 
     private GameViewModel gameViewModel;
 
+    private String yourWordText;
+
+    public GameFragment(){
+        yourWordText = "Your word";
+    }
+
+    public GameFragment(String chooseWord){
+        yourWordText = chooseWord;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,8 +60,15 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if(!yourWordText.equals("Your word")){
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(yourWordText);
+        }
+
+        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
+        gameViewModel.setYourWordText(yourWordText);
+
         textViewYourWord = view.findViewById(R.id.textViewYourWord);
-        textViewYourWord.setText("Your word");
+        textViewYourWord.setText(yourWordText);
         textViewYourWord.setMovementMethod(LinkMovementMethod.getInstance());
 
         textViewYourLetters = view.findViewById(R.id.textViewYourLetters);
@@ -58,9 +78,6 @@ public class GameFragment extends Fragment {
         textViewCurrentNumber = view.findViewById(R.id.textViewCurrentNumber);
         textViewAlphabet = view.findViewById(R.id.textViewAlphabet);
         textViewAlphabet.setMovementMethod(LinkMovementMethod.getInstance());
-
-
-        gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
         gameViewModel.getCurrentValText().observe(this, new Observer<String>() {
             @Override
@@ -139,6 +156,8 @@ public class GameFragment extends Fragment {
                 }
             });
         }
+
+        randomizeOperations();
     }
 
 
@@ -146,15 +165,19 @@ public class GameFragment extends Fragment {
         String buttonText = button.getText().toString();
         if(buttonText.equals("+/-")){
             gameViewModel.negateVal();
+            randomizeOperations();
         }else if(buttonText.equals("CE")){
             gameViewModel.restartVal();
+            randomizeOperations();
         }else if(buttonText.equals("R")){
             gameViewModel.restartWord();
         }else if(buttonText.equals("<<")){
             gameViewModel.removeLeftDigit();
+            randomizeOperations();
         }
         else if(buttonText.equals(">>")){
             gameViewModel.removeRightDigit();
+            randomizeOperations();
         }
         else {
             String currentNumberSt = gameViewModel.getCurrentValText().getValue();
@@ -176,6 +199,7 @@ public class GameFragment extends Fragment {
                 }
             } else if (val != null) {
                 gameViewModel.performOperation(currentNumberSt.charAt(currentNumberSt.length() - 1) + "", val);
+                randomizeOperations();
             } else {
                 gameViewModel.changeCurrentValText(currentNumberSt.split(" ")[0] + " " + buttonText);
             }
@@ -191,6 +215,7 @@ public class GameFragment extends Fragment {
                 @Override
                 public void onClick(View yourTextView) {
                     gameViewModel.addLetter(alphabet.charAt(finalN - 1));
+                    randomizeOperations();
                 }
             };
             span.setSpan(clickSpan, n - 1, n, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -210,6 +235,45 @@ public class GameFragment extends Fragment {
         @Override
         public void onClick(@NonNull View widget) {
             gameViewModel.selectLetter(index);
+        }
+    }
+
+    private void randomizeOperations() {
+        ArrayList<Button> numberButtons = new ArrayList<>();
+        ArrayList<Button> operationButtons = new ArrayList<>();
+        for (int a = 0; a < constraintLayoutButtons.getChildCount(); a++) {
+            Button current = (Button) constraintLayoutButtons.getChildAt(a);
+            current.setClickable(true);
+            current.setTextColor(Color.rgb(0,0,0));
+            switch (current.getText().toString()) {
+                case "+":
+                case "-":
+                case "*":
+                case "^":
+                case "/":
+                case "+/-":
+                case "<<":
+                case ">>":
+                    operationButtons.add(current);
+                    break;
+                case "R":
+                case "CE":
+                    break;
+                default:
+                    numberButtons.add(current);
+            }
+        }
+        Random random = new Random();
+        Button bt;
+        for(int a = 0; a < 4; a++){
+            bt =  numberButtons.remove(random.nextInt(numberButtons.size()));
+            bt.setClickable(false);
+            bt.setTextColor(Color.rgb(150,150,150));
+        }
+        for(int a = 0; a < 2; a++){
+            bt =  operationButtons.remove(random.nextInt(numberButtons.size()));
+            bt.setClickable(false);
+            bt.setTextColor(Color.rgb(150,150,150));
         }
     }
 }

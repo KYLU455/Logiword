@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
+    android:background="#C4C4C4"
     tools:context=".FriendList.FriendListFragment">
 
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="32sp"
-        android:gravity="center"
-        android:textColor="@android:color/white"
-        android:text="Friend List" />
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:id="@+id/friend_edit_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:background="@android:color/white"
+            android:hint="Type your friend name here" />
+
+        <Button
+            android:id="@+id/friend_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="155dp"
+            android:padding="10dp"
+            android:background="@drawable/round_button_style"
+            app:layout_anchor="@id/friend_edit_text_view"
+            app:layout_anchorGravity="bottom"
+            android:text="Add Friend"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view_friend"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="bottom"
+            tools:listitem="@layout/friend_item" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

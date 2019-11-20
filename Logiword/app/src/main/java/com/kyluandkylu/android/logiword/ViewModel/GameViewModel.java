@@ -149,7 +149,7 @@ public class GameViewModel extends AndroidViewModel {
                 currentVal.setValue(v / val);
                 break;
             case "^":
-                currentVal.setValue(v ^ val);
+                currentVal.setValue((int) (Math.pow(v, val)));
                 break;
         }
         moves.add(new Calculation(type, v, val));

@@ -83,6 +83,11 @@ public class GameViewModel extends AndroidViewModel {
     }
 
     public void restartWord(){
+        String old = currentWord.getValue();
+        for(char c : old.toCharArray()){
+            currentLetters.getValue().add(c);
+        }
+        currentLetters.setValue(currentLetters.getValue());
         currentWord.setValue("Your word");
     }
 
@@ -92,6 +97,7 @@ public class GameViewModel extends AndroidViewModel {
 
     public void addLetter(char letter){
         currentLetters.getValue().add(letter);
+        moves.add(new LetterSetChange(letter));
         currentLetters.setValue(currentLetters.getValue());
     }
 
@@ -117,7 +123,7 @@ public class GameViewModel extends AndroidViewModel {
         currentVal.setValue(newVal);
     }
 
-    public void restarVal(){
+    public void restartVal(){
         moves.add(new Calculation("R", currentVal.getValue(), 0));
         currentVal.setValue(0);
     }
@@ -149,5 +155,7 @@ public class GameViewModel extends AndroidViewModel {
         moves.add(new Calculation(type, v, val));
     }
 
-
+    public ArrayList<Move> getMoves() {
+        return moves;
+    }
 }

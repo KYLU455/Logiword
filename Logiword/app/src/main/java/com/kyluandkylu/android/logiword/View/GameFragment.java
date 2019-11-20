@@ -1,5 +1,7 @@
 package com.kyluandkylu.android.logiword.View;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.kyluandkylu.android.logiword.R;
+import com.kyluandkylu.android.logiword.Score.ScoreCalculator;
 import com.kyluandkylu.android.logiword.ViewModel.GameViewModel;
 
 import java.util.ArrayList;
@@ -46,6 +49,7 @@ public class GameFragment extends Fragment {
 
         textViewYourWord = view.findViewById(R.id.textViewYourWord);
         textViewYourWord.setText("Your word");
+        textViewYourWord.setMovementMethod(LinkMovementMethod.getInstance());
 
         textViewYourLetters = view.findViewById(R.id.textViewYourLetters);
         textViewYourLetters.setText("Your letters");
@@ -105,7 +109,16 @@ public class GameFragment extends Fragment {
                     spannableString.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View widget) {
-                            // TODO: 14-Nov-19 IMPLEMENT ON WORD SUBMIT
+                            Log.d("SCORES", ScoreCalculator.calculateScores(gameViewModel.getMoves(),gameViewModel.getCurrentLetters().getValue().size(),gameViewModel.getCurrentWord().getValue()) + "");
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("Finish game")
+                                    .setMessage("Are you sure you want to finish the game?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // TODO: 14-Nov-19 IMPLEMENT ON WORD SUBMIT and add used letters
+                                        }
+                                    }).setNegativeButton("No", null).show();
                         }
                     },0, spannableString.length(),SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
                     textViewYourWord.setText(spannableString);
@@ -134,7 +147,7 @@ public class GameFragment extends Fragment {
         if(buttonText.equals("+/-")){
             gameViewModel.negateVal();
         }else if(buttonText.equals("CE")){
-            gameViewModel.restarVal();
+            gameViewModel.restartVal();
         }else if(buttonText.equals("R")){
             gameViewModel.restartWord();
         }else if(buttonText.equals("<<")){

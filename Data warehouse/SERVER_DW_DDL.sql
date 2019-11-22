@@ -127,12 +127,5 @@ create table F_SINGLE_PLAYER_GAME(
     constraint f_single_player_game_fk_d_player foreign key (player_id) references D_PLAYER
 )pctfree 0;
 
-create or replace function get_hash (p_name  IN  VARCHAR2, p_password  IN  VARCHAR2)
-    RETURN VARCHAR2 AS
-    l_salt VARCHAR2(30) := 'dm9u84FHaPWfv0pTFqSJuiK356aFAC';
-  BEGIN
-    RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password || p_name || l_salt),DBMS_CRYPTO.HASH_SH1);
-  END;
-
 commit;
 

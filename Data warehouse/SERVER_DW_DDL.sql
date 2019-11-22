@@ -122,17 +122,16 @@ create table F_SINGLE_PLAYER_GAME(
     game_id number not null,
     player_id number not null,
     word_created varchar2(64) not null ,
-    is_valid_word char(1) check ( is_valid_word in ('Y', 'N')) not null,
     score number not null,
     constraint f_single_player_game_fk_d_single_player_game foreign key (game_id) references D_SINGLE_PLAYER_GAME,
     constraint f_single_player_game_fk_d_player foreign key (player_id) references D_PLAYER
 )pctfree 0;
 
-create or replace function get_hash (p_password  IN  VARCHAR2)
+create or replace function get_hash (p_name  IN  VARCHAR2, p_password  IN  VARCHAR2)
     RETURN VARCHAR2 AS
     l_salt VARCHAR2(30) := 'dm9u84FHaPWfv0pTFqSJuiK356aFAC';
   BEGIN
-    RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password || l_salt),DBMS_CRYPTO.HASH_SH1);
+    RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password || p_name || l_salt),DBMS_CRYPTO.HASH_SH1);
   END;
 
 commit;

@@ -3,7 +3,7 @@ create or replace function get_hash (p_name  IN  VARCHAR2, p_password  IN  VARCH
     l_salt VARCHAR2(30) := 'dm9u84FHaPWfv0pTFqSJuiK356aFAC';
   BEGIN
     RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password || p_name || l_salt),DBMS_CRYPTO.HASH_SH1);
-  END;
+  END get_hash;
 
 create or replace function get_daily_challenge_for_tomorrow
     return varchar2 is
@@ -55,14 +55,14 @@ begin
             end loop;
     end if;
     return null;
-end;
+end get_daily_challenge_for_tomorrow;
 
 create or replace procedure insert_daily_challenge_for_tomorrow(word varchar2)
 as
 begin
     insert into D_DAILY_CHALLENGE(ID, WORD, VALID_FROM, VALID_TO)
     VALUES (D_DAILY_CHALLENGE_ID.nextval, word, TRUNC(sysdate + 1), TRUNC(sysdate + 2) - 1 / 86400);
-end;
+end insert_daily_challenge_for_tomorrow;
 
 select get_daily_challenge_for_tomorrow()
 from dual;

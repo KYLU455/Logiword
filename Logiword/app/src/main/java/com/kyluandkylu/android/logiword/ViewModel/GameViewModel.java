@@ -29,6 +29,7 @@ public class GameViewModel extends AndroidViewModel {
 
     private TreeSet<String> words;
     private String yourWordText;
+    private boolean justRestarted;
 
     public GameViewModel(@NonNull Application application){
         super(application);
@@ -42,6 +43,7 @@ public class GameViewModel extends AndroidViewModel {
         currentWord.setValue(yourWordText);
         words = WordList.getWords();
         moves = new ArrayList<>();
+        justRestarted = true;
     }
 
     public void removeLeftDigit(){
@@ -72,7 +74,9 @@ public class GameViewModel extends AndroidViewModel {
         if(yourWordText.equals("Your word")){
             return words.contains(currentWord.getValue().toLowerCase()) && currentWord.getValue().length() >= 3;
         }else{
-            return currentWord.getValue().toLowerCase().equals(yourWordText.toLowerCase()) && moves.size() > 0;
+            boolean ret = currentWord.getValue().toLowerCase().equals(yourWordText.toLowerCase()) && !justRestarted && moves.size() > 0;
+            justRestarted = false;
+            return ret;
         }
 
     }
@@ -90,6 +94,7 @@ public class GameViewModel extends AndroidViewModel {
             for(char c : old.toCharArray()){
                 currentLetters.getValue().add(c);
             }
+            justRestarted = true;
             currentLetters.setValue(currentLetters.getValue());
             currentWord.setValue(yourWordText);
         }

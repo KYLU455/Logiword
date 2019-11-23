@@ -1,6 +1,9 @@
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,9 +19,18 @@ public class PersonServlet extends HttpServlet {
         String requestUrl = request.getRequestURI();
         String name = requestUrl.substring("/people/".length());
 
-        Person person = DataStore.getInstance().getPerson(name);
-
         if(person != null){
+            try {
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection conn = DriverManager.getConnection(
+                    "jdbc:oracle:thin:@localhost:1521:XE", "admin", "admin");
+
+
+            } catch (SQLException e) {
+                System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             String json = "{\n";
             json += "\"name\": " + JSONObject.quote(person.getName()) + ",\n";
             json += "\"about\": " + JSONObject.quote(person.getAbout()) + ",\n";
@@ -31,8 +43,6 @@ public class PersonServlet extends HttpServlet {
             response.getOutputStream().println("{}");
         }
     }
-
-
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

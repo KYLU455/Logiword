@@ -9,6 +9,8 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="json-20190722" />
+          <element id="library" level="project" name="ojdbc8" />
+          <element id="file-copy" path="X:/Download/sqldeveloper/jdbc/lib/ojdbc8.jar" />
         </element>
       </element>
     </root>

@@ -1,7 +1,7 @@
 package com.bachelor.logiword.server.api;
 
-import com.bachelor.logiword.server.model.SinglePlayerGame;
-import com.bachelor.logiword.server.model.SinglePlayerGameData;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGame;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameData;
 import com.bachelor.logiword.server.service.SinglePlayerGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +24,13 @@ public class SinglePlayerGameController {
         singlePlayerGameService.addGame(game);
     }
 
-//    @GetMapping
-//    public List<SinglePlayerGameData> getAllSinglePlayerGames(){
-//        return singlePlayerGameService.getAllSinglePlayerGames();
-//    }
+    @GetMapping
+    public List<SinglePlayerGameData> getAllSinglePlayerGames(){
+        return singlePlayerGameService.getAllSinglePlayerGames();
+    }
 
-//    @GetMapping(path = "{playerId}")
-//    public List<SinglePlayerGame> getGamesByUser(@PathVariable("playerId") int playerId){
-//        return singlePlayerGameService.getGamesByUser(playerId);
-//    }
+    @GetMapping(path = "{playerId}")
+    public List<SinglePlayerGameData> getGamesByUser(@PathVariable("playerId") int playerId){
+        return singlePlayerGameService.getGamesByUser(playerId);
+    }
 }

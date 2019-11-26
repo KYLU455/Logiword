@@ -1,4 +1,4 @@
-package com.bachelor.logiword.server.dao;
+package com.bachelor.logiword.server.dao.single_player;
 
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGame;
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGameData;

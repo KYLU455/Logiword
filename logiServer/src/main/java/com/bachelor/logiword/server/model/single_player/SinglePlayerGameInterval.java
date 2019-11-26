@@ -5,6 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.sql.Date;
 
+// This annotation is not connected to this model, but it had to be declared in a class that is an entity as well
+@SqlResultSetMapping(name = "SinglePlayerWithName", classes = {
+        @ConstructorResult(targetClass = SinglePlayerGameDataWithPlayerName.class,
+                columns = {
+                        @ColumnResult(name = "PLAYER_NAME", type = String.class),
+                        @ColumnResult(name = "WORD_CREATED", type = String.class),
+                        @ColumnResult(name = "SCORE", type = Integer.class)
+                })
+})
+
 @Entity
 @Table(name = "D_SINGLE_PLAYER_GAME")
 public class SinglePlayerGameInterval {

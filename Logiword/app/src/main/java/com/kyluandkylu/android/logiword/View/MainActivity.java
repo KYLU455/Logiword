@@ -20,6 +20,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.kyluandkylu.android.logiword.FireBase.Authentication.LogInFragment;
 import com.kyluandkylu.android.logiword.FriendList.FriendListFragment;
 import com.kyluandkylu.android.logiword.Game.GameFragment;
+import com.kyluandkylu.android.logiword.LoadingScreen.LoadingScreenFragment;
 import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
 import com.kyluandkylu.android.logiword.R;
@@ -37,12 +38,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            WordList.getWordsInit(getApplication().getAssets().open("words_alpha.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
+        getSupportActionBar().hide();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoadingScreenFragment(getApplication(), getSupportActionBar())).commit();
     }
+
 
     @Override
     protected void onStart() {

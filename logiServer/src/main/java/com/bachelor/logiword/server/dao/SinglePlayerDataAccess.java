@@ -1,14 +1,15 @@
 package com.bachelor.logiword.server.dao;
 
-import com.bachelor.logiword.server.model.SinglePlayerGame;
-import com.bachelor.logiword.server.model.SinglePlayerGameData;
-import com.bachelor.logiword.server.model.SinglePlayerGameInterval;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGame;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameData;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameInterval;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository("em")
 public class SinglePlayerDataAccess implements SinglePlayerDao {
@@ -19,10 +20,6 @@ public class SinglePlayerDataAccess implements SinglePlayerDao {
     @Transactional
     public int insertGame(SinglePlayerGame game) {
         SinglePlayerGameInterval interval = new SinglePlayerGameInterval(game.getFrom(), game.getTo());
-//        em.createNativeQuery("INSERT INTO D_SINGLE_PLAYER_GAME (ID, START_TIME, END_TIME) VALUES (D_SINGLE_PLAYER_ID.nextval, ?, ?)")
-//                .setParameter(1, interval.getFrom())
-//                .setParameter(2, interval.getTo())
-//                .executeUpdate();
         em.persist(interval);
         em.flush();
 
@@ -30,5 +27,23 @@ public class SinglePlayerDataAccess implements SinglePlayerDao {
         em.persist(gameData);
 
         return 1;
+    }
+
+    @Override
+    public List<SinglePlayerGameDataWithPlayerName> getAllSinglePlayerGames() {
+        return em.createQuery("select new com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName(dbPlayer.username, FSPG.wordCreated, FSPG.score) " +
+                "from com.bachelor.logiword.server.model.single_player.SinglePlayerGameInterval DSPG " +
+                "inner join com.bachelor.logiword.server.model.single_player.SinglePlayerGameData FSPG on DSPG.id = FSPG.gameId " +
+                "inner join com.bachelor.logiword.server.model.account.Account dbPlayer on FSPG.playerId = dbPlayer.rowId and dbPlayer.to is null " +
+                "where END_TIME < sysdate and ROWNUM <= 10 " +
+                "order by SCORE desc", SinglePlayerGameDataWithPlayerName.class).getResultList();
+    }
+
+    @Override
+    public List<SinglePlayerGameData> getGamesByUser(int playerId) {
+        return em.createQuery("select FSPG from  " +
+                "com.bachelor.logiword.server.model.single_player.SinglePlayerGameData FSPG " +
+                "where FSPG.playerId=" + playerId +
+                " order by SCORE desc", SinglePlayerGameData.class).getResultList();
     }
 }

@@ -1,4 +1,4 @@
-package com.bachelor.logiword.server.model;
+package com.bachelor.logiword.server.model.single_player;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

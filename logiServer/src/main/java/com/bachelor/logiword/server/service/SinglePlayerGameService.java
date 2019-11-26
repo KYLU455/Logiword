@@ -3,6 +3,7 @@ package com.bachelor.logiword.server.service;
 import com.bachelor.logiword.server.dao.SinglePlayerDao;
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGame;
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGameData;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class SinglePlayerGameService {
         return singlePlayerDao.insertGame(game);
     }
 
-    public List<SinglePlayerGameData> getAllSinglePlayerGames(){
+    public List<SinglePlayerGameDataWithPlayerName> getAllSinglePlayerGames(){
         return singlePlayerDao.getAllSinglePlayerGames();
     }
 

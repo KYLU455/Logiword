@@ -2,6 +2,7 @@ package com.bachelor.logiword.server.dao;
 
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGame;
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGameData;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName;
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGameInterval;
 import org.springframework.stereotype.Repository;
 
@@ -29,11 +30,13 @@ public class SinglePlayerDataAccess implements SinglePlayerDao {
     }
 
     @Override
-    public List<SinglePlayerGameData> getAllSinglePlayerGames() {
-        return em.createQuery("select FSPG from com.bachelor.logiword.server.model.single_player.SinglePlayerGameInterval DSPG " +
+    public List<SinglePlayerGameDataWithPlayerName> getAllSinglePlayerGames() {
+        return em.createQuery("select new com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName(dbPlayer.username, FSPG.wordCreated, FSPG.score) " +
+                "from com.bachelor.logiword.server.model.single_player.SinglePlayerGameInterval DSPG " +
                 "inner join com.bachelor.logiword.server.model.single_player.SinglePlayerGameData FSPG on DSPG.id = FSPG.gameId " +
+                "inner join com.bachelor.logiword.server.model.account.Account dbPlayer on FSPG.playerId = dbPlayer.rowId and dbPlayer.to is null " +
                 "where END_TIME < sysdate and ROWNUM <= 10 " +
-                "order by SCORE desc", SinglePlayerGameData.class).getResultList();
+                "order by SCORE desc", SinglePlayerGameDataWithPlayerName.class).getResultList();
     }
 
     @Override

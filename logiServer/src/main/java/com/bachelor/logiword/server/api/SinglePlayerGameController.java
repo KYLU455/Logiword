@@ -2,6 +2,7 @@ package com.bachelor.logiword.server.api;
 
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGame;
 import com.bachelor.logiword.server.model.single_player.SinglePlayerGameData;
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName;
 import com.bachelor.logiword.server.service.SinglePlayerGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class SinglePlayerGameController {
     }
 
     @GetMapping
-    public List<SinglePlayerGameData> getAllSinglePlayerGames(){
+    public List<SinglePlayerGameDataWithPlayerName> getAllSinglePlayerGames(){
         return singlePlayerGameService.getAllSinglePlayerGames();
     }
 

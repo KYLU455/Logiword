@@ -3,7 +3,6 @@ package com.kyluandkylu.android.logiword.MainMenu;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.kyluandkylu.android.logiword.R;
-import com.kyluandkylu.android.logiword.View.GameFragment;
+import com.kyluandkylu.android.logiword.Game.GameFragment;
 
 public class MainMenu extends Fragment {
 

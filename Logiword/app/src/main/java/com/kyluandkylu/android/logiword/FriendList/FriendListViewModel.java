@@ -29,7 +29,7 @@ public class FriendListViewModel extends ViewModel {
         friendListHolder.setValue(friendListHolder.getValue());
     }
 
-    public MutableLiveData<List<FriendModel>> getAllFriend() {
+    public LiveData<List<FriendModel>> getAllFriend() {
         return friendListHolder;
     }
 

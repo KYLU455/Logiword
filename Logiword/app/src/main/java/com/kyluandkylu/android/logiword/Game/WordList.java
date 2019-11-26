@@ -1,6 +1,4 @@
-package com.kyluandkylu.android.logiword.ViewModel;
-
-import android.util.Log;
+package com.kyluandkylu.android.logiword.Game;
 
 import java.io.BufferedReader;
 import java.io.IOException;

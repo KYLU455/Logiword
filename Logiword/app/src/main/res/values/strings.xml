@@ -13,4 +13,5 @@
     <string name="singlePlayerString">Single Player</string>
     <string name="multiplayerString">Multiplayer</string>
     <string name="daily_challenge">daily challenge</string>
+    <string name="difficulty">Difficulty</string>
 </resources>

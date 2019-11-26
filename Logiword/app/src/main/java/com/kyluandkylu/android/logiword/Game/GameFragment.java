@@ -1,7 +1,9 @@
-package com.kyluandkylu.android.logiword.View;
+package com.kyluandkylu.android.logiword.Game;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -25,7 +27,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Score.ScoreCalculator;
-import com.kyluandkylu.android.logiword.ViewModel.GameViewModel;
+import com.kyluandkylu.android.logiword.Game.GameViewModel;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -126,7 +128,12 @@ public class GameFragment extends Fragment {
                     spannableString.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View widget) {
-                            Log.d("SCORES", ScoreCalculator.calculateScores(gameViewModel.getMoves(),gameViewModel.getCurrentLetters().getValue().size(),gameViewModel.getCurrentWord().getValue()) + "");
+                            int difficulty = 1;
+                            if(yourWordText.equals("Your word")){
+                                difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY" , 1);
+                            }
+                            double scores = ScoreCalculator.calculateScores(gameViewModel.getMoves(),gameViewModel.getCurrentLetters().getValue().size(),gameViewModel.getCurrentWord().getValue(), difficulty);
+                            Log.d("SCORES",  scores + "");
                             new AlertDialog.Builder(getContext())
                                     .setTitle("Finish game")
                                     .setMessage("Are you sure you want to finish the game?")
@@ -265,12 +272,16 @@ public class GameFragment extends Fragment {
         }
         Random random = new Random();
         Button bt;
-        for(int a = 0; a < 4; a++){
+        int difficulty = 1;
+        if(yourWordText.equals("Your word")){
+            difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY" , 1);
+        }
+        for(int a = 3 + difficulty; a > 0; a--){
             bt =  numberButtons.remove(random.nextInt(numberButtons.size()));
             bt.setClickable(false);
             bt.setTextColor(Color.rgb(150,150,150));
         }
-        for(int a = 0; a < 2; a++){
+        for(int a = 1 + difficulty; a > 0; a--){
             bt =  operationButtons.remove(random.nextInt(numberButtons.size()));
             bt.setClickable(false);
             bt.setTextColor(Color.rgb(150,150,150));

@@ -17,13 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.kyluandkylu.android.logiword.FireBase.Authentication.LogInFragment;
 import com.kyluandkylu.android.logiword.FriendList.FriendListFragment;
+import com.kyluandkylu.android.logiword.Game.GameFragment;
 import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Score.ScoreFragment;
 import com.kyluandkylu.android.logiword.Settings.SettingsFragment;
-import com.kyluandkylu.android.logiword.ViewModel.WordList;
+import com.kyluandkylu.android.logiword.Game.WordList;
 
 import java.io.IOException;
 
@@ -76,6 +78,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // TODO: 23-Nov-19 LOG IN 
+        if(false){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogInFragment()).commit();
+            toolbar.setTitle("Log in");
+        }
     }
 
     @Override

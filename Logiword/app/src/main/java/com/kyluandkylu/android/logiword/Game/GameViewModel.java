@@ -32,7 +32,7 @@ public class GameViewModel extends AndroidViewModel {
         currentLetters.setValue(new ArrayList<Character>());
         currentWord = new MutableLiveData<>();
         currentWord.setValue(yourWordText);
-        words = WordList.wordsTree;
+        words = WordList.getWords();
         moves = new ArrayList<>();
         justRestarted = true;
     }
@@ -146,6 +146,7 @@ public class GameViewModel extends AndroidViewModel {
                 currentVal.setValue(v * val);
                 break;
             case "/":
+                // TODO: 20-Nov-19 Remove 0
                 if(val != 0){
                     currentVal.setValue(v / val);
                 }

@@ -7,12 +7,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +50,7 @@ public class LoadingScreenFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    WordList.getWordsInit(application.getAssets().open("words_alpha.txt"), progressBar);
+                    WordList.wordsTree = WordList.loadWordsFromTextFile(application.getAssets().open("words_alpha.txt"), progressBar);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

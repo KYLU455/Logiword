@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
-    tools:context=".Score.ScoreFragment">
+    android:background="#C4C4C4"
+    tools:context=".FriendList.FriendListFragment">
 
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Score"
-        android:textSize="32sp" />
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/local_score_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:text="My Scores"
+            android:textAlignment="center"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="10dp"
+            android:text="Rank"
+            android:textStyle="bold"
+            app:layout_anchor="@id/recycle_view_score"
+            app:layout_anchorGravity="top" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:text="Word"
+            android:textStyle="bold"
+            app:layout_anchor="@id/recycle_view_score"
+            app:layout_anchorGravity="top|center_horizontal" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:text="Score"
+            android:textStyle="bold"
+            app:layout_anchor="@id/recycle_view_score"
+            app:layout_anchorGravity="top|right" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view_score"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="bottom"
+            tools:listitem="@layout/local_score_item" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

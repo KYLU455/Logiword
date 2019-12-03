@@ -41,16 +41,23 @@ public class Account implements Serializable {
     public Account() {
     }
 
-    public Account(@JsonProperty("username") String username,
-                   @JsonProperty("password") String password) {
-        this.username = username;
-        this.password = password;
-    }
+//    public Account(@JsonProperty("username") String username,
+//                   @JsonProperty("password") String password) {
+//        this.username = username;
+//        this.password = password;
+//    }
+//
+//    public Account(@JsonProperty("username") String username,
+//                   @JsonProperty("password") String password,
+//                   @JsonProperty("mail") String mail,
+//                   @JsonProperty("from") Date from) {
+//        this.username = username;
+//        this.password = password;
+//        this.mail = mail;
+//        this.from = from;
+//    }
 
-    public Account(@JsonProperty("username") String username,
-                   @JsonProperty("password") String password,
-                   @JsonProperty("mail") String mail,
-                   @JsonProperty("from") Date from) {
+    public Account(String username, String password, String mail, Date from) {
         this.username = username;
         this.password = password;
         this.mail = mail;
@@ -67,5 +74,33 @@ public class Account implements Serializable {
         this.password = password;
         this.mail = mail;
         this.from = from;
+    }
+
+    public int getRowId() {
+        return rowId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public Date getFrom() {
+        return from;
+    }
+
+    public Date getTo() {
+        return to;
     }
 }

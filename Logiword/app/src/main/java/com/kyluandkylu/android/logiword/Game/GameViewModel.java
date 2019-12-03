@@ -32,7 +32,7 @@ public class GameViewModel extends AndroidViewModel {
         currentLetters.setValue(new ArrayList<Character>());
         currentWord = new MutableLiveData<>();
         currentWord.setValue(yourWordText);
-        words = WordList.getWords();
+        words = WordList.getInstance().getWordsTree();
         moves = new ArrayList<>();
         justRestarted = true;
     }

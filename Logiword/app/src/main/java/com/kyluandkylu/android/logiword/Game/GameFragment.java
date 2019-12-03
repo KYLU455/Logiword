@@ -205,8 +205,22 @@ public class GameFragment extends Fragment {
                     gameViewModel.changeVal(val);
                 }
             } else if (val != null) {
-                gameViewModel.performOperation(currentNumberSt.charAt(currentNumberSt.length() - 1) + "", val);
-                randomizeOperations();
+                if(!(val == 0 && currentNumberSt.charAt(currentNumberSt.length() - 1) == '/')){
+                    gameViewModel.performOperation(currentNumberSt.charAt(currentNumberSt.length() - 1) + "", val);
+                    randomizeOperations();
+                }else {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("VERY SERIOUS VIOLATION OF THE RULES OF THE UNIVERSE")
+                            .setMessage("Please don't divide by 0")
+                            .setIcon(R.drawable.ic_warning_black_24dp)
+                            .setNeutralButton("I promise I won't do it again", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).show();
+
+                }
             } else {
                 gameViewModel.changeCurrentValText(currentNumberSt.split(" ")[0] + " " + buttonText);
             }

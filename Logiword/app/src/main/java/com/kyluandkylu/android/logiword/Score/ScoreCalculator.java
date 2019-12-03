@@ -34,6 +34,10 @@ public class ScoreCalculator {
             scores = scores - 10000;
             numberOfUnusedLetters--;
         }
-        return scores * (difficulty + 1);
+        if(scores > 0){
+            return scores * (difficulty + 1);
+        }else {
+            return scores;
+        }
     }
 }

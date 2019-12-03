@@ -53,7 +53,7 @@ public class LoadingScreenFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    WordList.getWordsInit(application.getAssets().open("words_alpha.txt"), progressBar);
+                    WordList.loadWordsFromTextFile(application.getAssets().open("words_alpha.txt"), progressBar);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

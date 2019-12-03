@@ -1,6 +1,5 @@
 package com.kyluandkylu.android.logiword.Game;
 
-import android.util.Log;
 import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
@@ -18,7 +17,11 @@ public class WordList {
         this.wordsTree = wordsTree;
     }
 
-    public static TreeSet<String> getWordsInit(InputStream inputStream, ProgressBar progressBar){
+    public static WordList getInstance(){
+        return wordList;
+    }
+
+    public static TreeSet<String> loadWordsFromTextFile(InputStream inputStream, ProgressBar progressBar){
         TreeSet<String> words = new TreeSet<>();
         if(wordList == null && inputStream != null){
             try {
@@ -38,7 +41,7 @@ public class WordList {
         return wordsTree;
     }
 
-    public static TreeSet<String> getWords(){
+    public TreeSet<String> getWordsTree() {
         return wordsTree;
     }
 }

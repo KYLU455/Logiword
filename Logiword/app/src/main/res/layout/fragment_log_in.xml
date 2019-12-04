@@ -3,13 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FireBase.Authentication.LogInFragment">
+    tools:context=".Authentication.LogInFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
+        <TextView
+            android:id="@+id/textViewUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="User Name:" />
+
+        <EditText
+            android:id="@+id/editTextUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10" />
 
         <TextView
             android:id="@+id/textViewEmail"
@@ -47,6 +60,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Log in" />
+        <Button
+            android:id="@+id/buttonContinueWithout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Continue without log in" />
 
 
     </LinearLayout>

@@ -1,9 +1,11 @@
 package com.kyluandkylu.android.logiword.Score;
 
 import com.kyluandkylu.android.logiword.FriendList.FriendModel;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -15,6 +17,14 @@ public class ScoreViewModel extends ViewModel {
 
     public ScoreViewModel() {
         //  friendListHolder = new FriendModel("Pista", 456, "online");
+        WebService webService = new WebService();
+        try {
+            webService.getScoreTable();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         myScoreHolder = new MediatorLiveData<>();
         myScoreHolder.setValue(new ArrayList<ScoreModel>());
         myScoreHolder.getValue().add(new ScoreModel("Pityu", 4569));

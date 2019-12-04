@@ -17,18 +17,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.kyluandkylu.android.logiword.FireBase.Authentication.LogInFragment;
 import com.kyluandkylu.android.logiword.FriendList.FriendListFragment;
 import com.kyluandkylu.android.logiword.Game.GameFragment;
 import com.kyluandkylu.android.logiword.LoadingScreen.LoadingScreenFragment;
 import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
 import com.kyluandkylu.android.logiword.R;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
 import com.kyluandkylu.android.logiword.Score.ScoreFragment;
 import com.kyluandkylu.android.logiword.Settings.SettingsFragment;
-import com.kyluandkylu.android.logiword.Game.WordList;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -75,18 +74,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
         getSupportActionBar().hide();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoadingScreenFragment(getApplication(), getSupportActionBar())).commit();
-    }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // TODO: 23-Nov-19 LOG IN 
-        if(false){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogInFragment()).commit();
-            toolbar.setTitle("Log in");
+        WebService webService = new WebService();
+        try {
+            Log.d("SERVICE",  webService.getScoreTable().get(0).getPlayerName());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

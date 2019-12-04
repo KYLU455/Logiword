@@ -1,5 +1,6 @@
 package com.kyluandkylu.android.logiword.MainMenu;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -47,6 +48,7 @@ public class MainMenu extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Logi Word");
         ft = getFragmentManager().beginTransaction();
         singleButton = view.findViewById(R.id.single_player_button);
         singleButton.setOnClickListener(new View.OnClickListener() {

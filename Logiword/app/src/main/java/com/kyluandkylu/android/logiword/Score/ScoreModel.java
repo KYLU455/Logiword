@@ -8,8 +8,6 @@ public class ScoreModel {
 
 
     public ScoreModel(String myWord, int myScore){
-        //this.gameID = gameID;
-       // this.playerID = playerID;
         this.myWord = myWord;
         this.myScore = myScore;
     }

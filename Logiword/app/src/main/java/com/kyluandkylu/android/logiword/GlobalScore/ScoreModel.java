@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword.Score;
+package com.kyluandkylu.android.logiword.GlobalScore;
 
 public class ScoreModel {
 

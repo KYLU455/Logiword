@@ -1,10 +1,7 @@
-package com.kyluandkylu.android.logiword.Score;
+package com.kyluandkylu.android.logiword.GlobalScore;
 
-import com.kyluandkylu.android.logiword.FriendList.FriendModel;
 import com.kyluandkylu.android.logiword.Retrofit.WebService;
-import com.kyluandkylu.android.logiword.Retrofit.WebServiceLogiWord;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

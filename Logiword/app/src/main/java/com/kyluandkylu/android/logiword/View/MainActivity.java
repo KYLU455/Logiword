@@ -24,7 +24,7 @@ import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Retrofit.WebService;
-import com.kyluandkylu.android.logiword.Score.ScoreFragment;
+import com.kyluandkylu.android.logiword.GlobalScore.ScoreFragment;
 import com.kyluandkylu.android.logiword.Settings.SettingsFragment;
 
 import java.util.concurrent.ExecutionException;

@@ -7,75 +7,85 @@
     android:background="#C4C4C4"
     tools:context=".FriendList.FriendListFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
-            android:id="@+id/local_score_text_view"
+            android:id="@+id/global_score_text_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="30dp"
-            android:text="My Scores"
+            android:text="@string/global_ranking_list"
             android:textAlignment="center"
             android:textSize="32sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/global_rank_view"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="start"
+            android:text="@string/rank"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/global_word_view"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/global_name_view"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_margin="10dp"
-            android:text="Rank"
+            android:layout_marginBottom="20dp"
+            android:text="@string/name"
             android:textStyle="bold"
-            app:layout_anchor="@id/recycle_view_score"
-            app:layout_anchorGravity="top" />
+            app:layout_constraintBottom_toTopOf="@+id/recycle_view_score"
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toEndOf="@+id/global_rank_view" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_margin="10dp"
-            android:layout_marginStart="400dp"
-            android:text="Name"
-            android:textStyle="bold"
-            app:layout_anchor="@id/recycle_view_score"
-            app:layout_anchorGravity="top" />
-
-        <TextView
+            android:id="@+id/global_word_view"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            android:text="Word"
+            android:text="@string/word"
             android:textStyle="bold"
-            app:layout_anchor="@id/recycle_view_score"
-            app:layout_anchorGravity="top|center_horizontal" />
+            app:layout_constraintBottom_toTopOf="@+id/recycle_view_score"
+            app:layout_constraintEnd_toStartOf="@+id/global_score_view"
+            app:layout_constraintStart_toEndOf="@+id/global_name_view" />
 
         <TextView
+            android:id="@+id/global_score_view"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="10dp"
-            android:text="Score"
+            android:layout_marginBottom="90dp"
+            android:text="@string/score"
             android:textStyle="bold"
-            app:layout_anchor="@id/recycle_view_score"
-            app:layout_anchorGravity="top|right" />
-
+            app:layout_constraintBottom_toTopOf="@+id/recycle_view_score"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.57" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view_score"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_gravity="bottom"
-            tools:listitem="@layout/local_score_item" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/global_score_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

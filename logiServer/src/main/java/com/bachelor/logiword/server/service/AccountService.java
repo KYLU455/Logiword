@@ -23,4 +23,8 @@ public class AccountService {
     public int login(String username, String password){
         return accountDao.login(username, password);
     }
+
+    public void updateUser(Account account) {
+        accountDao.update(account);
+    }
 }

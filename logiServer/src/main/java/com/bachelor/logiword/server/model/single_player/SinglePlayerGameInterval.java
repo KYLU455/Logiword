@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 // This annotation is not connected to this model, but it had to be declared in a class that is an entity as well
 @SqlResultSetMapping(name = "SinglePlayerWithName", classes = {
@@ -26,22 +27,22 @@ public class SinglePlayerGameInterval {
     private int id;
 
     @Column(name = "START_TIME")
-    private Date from;
+    private Timestamp from;
 
     @Column(name = "END_TIME")
-    private Date to;
+    private Timestamp to;
 
     public SinglePlayerGameInterval(){}
 
-    public SinglePlayerGameInterval(@JsonProperty("validFrom") Date from,
-                                      @JsonProperty("validTo") Date to){
+    public SinglePlayerGameInterval(@JsonProperty("validFrom") Timestamp from,
+                                      @JsonProperty("validTo") Timestamp to){
         this.from = from;
         this.to = to;
     }
 
     public SinglePlayerGameInterval(int id,
-                                    @JsonProperty("validFrom") Date from,
-                                    @JsonProperty("validTo") Date to){
+                                    @JsonProperty("validFrom") Timestamp from,
+                                    @JsonProperty("validTo") Timestamp to){
         this.id = id;
         this.from = from;
         this.to = to;
@@ -51,11 +52,11 @@ public class SinglePlayerGameInterval {
         return id;
     }
 
-    public Date getFrom() {
+    public Timestamp getFrom() {
         return from;
     }
 
-    public Date getTo() {
+    public Timestamp getTo() {
         return to;
     }
 

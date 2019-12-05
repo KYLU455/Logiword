@@ -18,16 +18,16 @@ public class AccountController {
 
     @PostMapping
     public void addUser(@RequestBody Account account){
-        Account relevantFields = new Account(
-                account.getUsername(),
-                account.getPassword(),
-                account.getMail(),
-                account.getFrom());
-        accountService.addUser(relevantFields);
+        accountService.addUser(account);
     }
 
     @GetMapping(path = "{playerName}/{password}")
     public int login(@PathVariable("playerName") String playerName, @PathVariable("password") String password){
         return accountService.login(playerName, password);
+    }
+
+    @PutMapping
+    public void updateUser(@RequestBody Account account){
+        accountService.updateUser(account);
     }
 }

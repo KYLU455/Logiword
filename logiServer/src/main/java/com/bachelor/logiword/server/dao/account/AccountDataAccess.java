@@ -17,21 +17,43 @@ public class AccountDataAccess implements AccountDao {
     @Override
     @Transactional
     public void register(Account acc) {
-        em.persist(acc);
+        em.createNativeQuery("insert into D_PLAYER (ROW_ID, PLAYER_ID, PLAYER_NAME, PASSWORD, MAIL, VALID_FROM, VALID_TO) " +
+                "values (D_PLAYER_ROW_ID.nextval, D_PLAYER_PLAYER_ID.nextval, ?, GET_HASH(?, ?), " +
+                "?, SYSDATE, null)")
+                .setParameter(1, acc.getUsername())
+                .setParameter(2, acc.getUsername())
+                .setParameter(3, acc.getPassword())
+                .setParameter(4, acc.getMail())
+                .executeUpdate();
     }
 
     @Override
     public int login(String username, String password) {
-        int thing = ((BigDecimal) em.createNativeQuery("select PLAYER_ID from D_PLAYER " +
-                "where PLAYER_NAME = ? and PASSWORD = ? and VALID_TO is null ")
+        return ((BigDecimal) em.createNativeQuery("select PLAYER_ID from D_PLAYER " +
+                "where PLAYER_NAME = ? and PASSWORD = GET_HASH(?, ?) and VALID_TO is null ")
                 .setParameter(1, username)
-                .setParameter(2, password)
+                .setParameter(2, username)
+                .setParameter(3, password)
                 .getResultList().get(0)).intValue();
-        return thing;
     }
 
     @Override
+    @Transactional
     public void update(Account acc) {
+        em.createNativeQuery("update D_PLAYER set VALID_TO = SYSDATE " +
+                "where PLAYER_ID = ? and VALID_TO is null ")
+                .setParameter(1, acc.getPlayerId())
+                .executeUpdate();
+
+        em.createNativeQuery("insert into D_PLAYER (ROW_ID, PLAYER_ID, PLAYER_NAME, PASSWORD, MAIL, VALID_FROM, VALID_TO) " +
+                "values (D_PLAYER_ROW_ID.nextval, ? , ?, GET_HASH(?, ?), " +
+                "?, SYSDATE, null)")
+                .setParameter(1, acc.getPlayerId())
+                .setParameter(2, acc.getUsername())
+                .setParameter(3, acc.getUsername())
+                .setParameter(4, acc.getPassword())
+                .setParameter(5, acc.getMail())
+                .executeUpdate();
 
     }
 }

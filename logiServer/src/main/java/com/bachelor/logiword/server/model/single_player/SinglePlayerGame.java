@@ -3,22 +3,23 @@ package com.bachelor.logiword.server.model.single_player;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class SinglePlayerGame {
 
     private int playerId;
     private String wordCreated;
     private int score;
-    private Date from;
-    private Date to;
+    private Timestamp from;
+    private Timestamp to;
 
     public SinglePlayerGame(){}
 
     public SinglePlayerGame(@JsonProperty("playerId") int playerId,
                             @JsonProperty("wordCreated") String wordCreated,
                             @JsonProperty("score") int score,
-                            @JsonProperty("from") Date from,
-                            @JsonProperty("to") Date to) {
+                            @JsonProperty("from") Timestamp from,
+                            @JsonProperty("to") Timestamp to) {
         this.playerId = playerId;
         this.wordCreated = wordCreated;
         this.score = score;
@@ -38,11 +39,11 @@ public class SinglePlayerGame {
         return score;
     }
 
-    public Date getFrom() {
+    public Timestamp getFrom() {
         return from;
     }
 
-    public Date getTo() {
+    public Timestamp getTo() {
         return to;
     }
 

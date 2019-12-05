@@ -31,7 +31,7 @@ public class SinglePlayerDataAccess implements SinglePlayerDao {
 
     @Override
     public List<SinglePlayerGameDataWithPlayerName> getAllSinglePlayerGames() {
-        return em.createNativeQuery("select PLAYER_NAME, WORD_CREATED, SCORE from (select * from D_SINGLE_PLAYER_GAME inner join F_SINGLE_PLAYER_GAME FSPG on D_SINGLE_PLAYER_GAME.ID = FSPG.GAME_ID inner join D_PLAYER on FSPG.PLAYER_ID = D_PLAYER.ROW_ID and D_PLAYER.VALID_TO is null where END_TIME < sysdate order by SCORE desc) where ROWNUM <= 10", "SinglePlayerWithName").getResultList();
+        return em.createNativeQuery("select PLAYER_NAME, WORD_CREATED, SCORE from (select * from D_SINGLE_PLAYER_GAME inner join F_SINGLE_PLAYER_GAME FSPG on D_SINGLE_PLAYER_GAME.ID = FSPG.GAME_ID inner join D_PLAYER on FSPG.PLAYER_ID = D_PLAYER.ROW_ID and D_PLAYER.VALID_TO is null order by SCORE desc) where ROWNUM <= 10", "SinglePlayerWithName").getResultList();
     }
 
     @Override

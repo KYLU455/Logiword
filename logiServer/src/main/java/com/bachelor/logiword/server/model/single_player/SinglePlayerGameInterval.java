@@ -3,7 +3,6 @@ package com.bachelor.logiword.server.model.single_player;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 // This annotation is not connected to this model, but it had to be declared in a class that is an entity as well

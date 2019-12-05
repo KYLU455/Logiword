@@ -2,7 +2,6 @@ package com.bachelor.logiword.server.model.single_player;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class SinglePlayerGame {

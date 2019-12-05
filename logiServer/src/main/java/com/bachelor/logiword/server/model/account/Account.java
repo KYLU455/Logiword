@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "D_PLAYER")
@@ -32,32 +32,16 @@ public class Account implements Serializable {
     private String mail;
 
     @Column(name = "VALID_FROM")
-    private Date from;
+    private Timestamp from;
 
     @Column(name = "VALID_TO")
-    private Date to;
+    private Timestamp to;
 
 
     public Account() {
     }
 
-//    public Account(@JsonProperty("username") String username,
-//                   @JsonProperty("password") String password) {
-//        this.username = username;
-//        this.password = password;
-//    }
-//
-//    public Account(@JsonProperty("username") String username,
-//                   @JsonProperty("password") String password,
-//                   @JsonProperty("mail") String mail,
-//                   @JsonProperty("from") Date from) {
-//        this.username = username;
-//        this.password = password;
-//        this.mail = mail;
-//        this.from = from;
-//    }
-
-    public Account(String username, String password, String mail, Date from) {
+    public Account(String username, String password, String mail, Timestamp from) {
         this.username = username;
         this.password = password;
         this.mail = mail;
@@ -68,7 +52,7 @@ public class Account implements Serializable {
                    @JsonProperty("username") String username,
                    @JsonProperty("password") String password,
                    @JsonProperty("mail") String mail,
-                   @JsonProperty("from") Date from) {
+                   @JsonProperty("from") Timestamp from) {
         this.playerId = playerId;
         this.username = username;
         this.password = password;
@@ -96,11 +80,11 @@ public class Account implements Serializable {
         return mail;
     }
 
-    public Date getFrom() {
+    public Timestamp getFrom() {
         return from;
     }
 
-    public Date getTo() {
+    public Timestamp getTo() {
         return to;
     }
 }

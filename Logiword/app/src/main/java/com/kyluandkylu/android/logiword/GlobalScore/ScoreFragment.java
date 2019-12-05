@@ -25,10 +25,6 @@ public class ScoreFragment extends Fragment {
     private RecyclerView recyclerView;
     private ScoreAdapter scoreAdapter;
 
-    public static ScoreFragment newInstance() {
-        return new ScoreFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -48,7 +44,6 @@ public class ScoreFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ScoreViewModel.class);
-       // mViewModel = ViewModelProviders.of(this).get(ScoreViewModel.class);
         mViewModel.getAllMyScores().observe(this, new Observer<List<ScoreModel>>() {
             @Override
             public void onChanged(List<ScoreModel> scoreModels) {

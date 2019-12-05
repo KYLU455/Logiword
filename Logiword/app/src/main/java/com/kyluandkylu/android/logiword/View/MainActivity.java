@@ -21,6 +21,7 @@ import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
 import com.kyluandkylu.android.logiword.FriendList.FriendListFragment;
 import com.kyluandkylu.android.logiword.Game.GameFragment;
 import com.kyluandkylu.android.logiword.LoadingScreen.LoadingScreenFragment;
+import com.kyluandkylu.android.logiword.LocalScore.LocalScoreFragment;
 import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.Profile.ProfileFragment;
 import com.kyluandkylu.android.logiword.R;
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GameFragment()).commit();
                 toolbar.setTitle(R.string.singlePlayerString);
                 break;
+            case R.id.nav_local_scores:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LocalScoreFragment()).commit();
+                toolbar.setTitle(R.string.localScoresString);
         }
 
         drawer.closeDrawer(GravityCompat.START);

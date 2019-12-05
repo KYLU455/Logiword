@@ -1,6 +1,7 @@
 package com.kyluandkylu.android.logiword.Retrofit;
 
 import com.kyluandkylu.android.logiword.GlobalScore.ScoreModel;
+import com.kyluandkylu.android.logiword.LocalScore.LocalScoreModel;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface WebServiceLogiWord {
 
     @GET("singleplayer")
     Call<List<ScoreModel>> getTopPlayersInSinglePlayer();
+
+    @GET("singleplayer/{myPlayerID}")
+    Call<List<LocalScoreModel>> getLocalScoreTable(@Path("myPlayerID") int myPlayerID);
 
     @POST("account")
     Call<ResponseBody> registerUser(@Body User user);

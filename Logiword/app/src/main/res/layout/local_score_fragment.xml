@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C4C4C4"
     tools:context=".LocalScore.LocalScoreFragment">
 
-    <TextView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:text="My Scores"
+            android:textAlignment="center"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="15dp"
+            android:text="@string/rank"
+            app:layout_anchor="@id/recycle_view_localScore" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:text="@string/word"
+            app:layout_anchor="@id/recycle_view_localScore"
+            app:layout_anchorGravity="center_horizontal" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="15dp"
+            android:text="@string/score"
+            app:layout_anchor="@id/recycle_view_localScore"
+            app:layout_anchorGravity="right" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view_localScore"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_gravity="bottom"
+            tools:listitem="@layout/local_score_item" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </FrameLayout>

@@ -2,6 +2,7 @@ package com.kyluandkylu.android.logiword.Score;
 
 import com.kyluandkylu.android.logiword.FriendList.FriendModel;
 import com.kyluandkylu.android.logiword.Retrofit.WebService;
+import com.kyluandkylu.android.logiword.Retrofit.WebServiceLogiWord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +15,15 @@ import androidx.lifecycle.ViewModel;
 
 public class ScoreViewModel extends ViewModel {
     private MutableLiveData<List<ScoreModel>> myScoreHolder;
+    private WebService webService;
 
-    public ScoreViewModel() {
-        //  friendListHolder = new FriendModel("Pista", 456, "online");
-        WebService webService = new WebService();
-        try {
-            webService.getScoreTable();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public ScoreViewModel() throws ExecutionException, InterruptedException {
+       if(myScoreHolder != null){
+           return;
+       }
         myScoreHolder = new MediatorLiveData<>();
-        myScoreHolder.setValue(new ArrayList<ScoreModel>());
-        myScoreHolder.getValue().add(new ScoreModel("Pityu", 4569));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu2", 4769));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu3", 4969));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu4", 4969));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu5", 4969));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu6", 4969));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu7", 4969));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu8", 4969));
-        myScoreHolder.getValue().add(new ScoreModel("Pityu9", 4969));
-        myScoreHolder.setValue(myScoreHolder.getValue());
+        webService = WebService.getInstance();
+        myScoreHolder.setValue(webService.getScoreTable());
     }
 
     public LiveData<List<ScoreModel>> getAllMyScores() {

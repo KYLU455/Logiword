@@ -1,28 +1,31 @@
 package com.kyluandkylu.android.logiword.Score;
 
 public class ScoreModel {
-    private int gameID;
-    private int playerID;
-    private String myWord;
-    private int myScore;
 
+    private String playerName;
+    private String wordCreated;
+    private int score;
 
-    public ScoreModel(String myWord, int myScore){
-        this.myWord = myWord;
-        this.myScore = myScore;
+    public ScoreModel(String playerName, String wordCreated, int score) {
+        this.playerName = playerName;
+        this.wordCreated = wordCreated;
+        this.score = score;
     }
 
-    public String getMyWord() {
-        return myWord;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public int getMyScore() {
-        return myScore;
+    public String getWordCreated() {
+        return wordCreated;
     }
 
-    public String myScoreToString(){
-        return String.valueOf(getMyScore());
-}
+    public int getScore() {
+        return score;
+    }
 
-
+    public String getStringScore()
+    {
+       return String.valueOf(getScore());
+    }
 }

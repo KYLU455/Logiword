@@ -28,8 +28,8 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreHolder>
     public void onBindViewHolder(@NonNull ScoreHolder holder, int position) {
         ScoreModel currentScore = myScores.get(position);
         holder.textViewMyrank.setText(String.valueOf(position + 1));
-        holder.textViewMyWord.setText(currentScore.getMyWord());
-        holder.textViewMyScore.setText(currentScore.myScoreToString());
+        holder.textViewMyWord.setText(currentScore.getWordCreated());
+        holder.textViewMyScore.setText(currentScore.getStringScore());
     }
 
     @Override

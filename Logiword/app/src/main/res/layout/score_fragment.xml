@@ -38,6 +38,18 @@
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_margin="10dp"
+            android:layout_marginStart="400dp"
+            android:text="Name"
+            android:textStyle="bold"
+            app:layout_anchor="@id/recycle_view_score"
+            app:layout_anchorGravity="top" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:text="Word"

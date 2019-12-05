@@ -1,5 +1,7 @@
 package com.kyluandkylu.android.logiword.Retrofit;
 
+import com.kyluandkylu.android.logiword.Score.ScoreModel;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -12,6 +14,7 @@ import retrofit2.http.Path;
 public interface WebServiceLogiWord {
 
     @GET("singleplayer")
+    Call<List<ScoreModel>> getTopPlayersInSinglePlayer();
     Call<List<ScoreTableEntity>> getTopPlayersInSinglePlayer();
 
     @POST("account")

@@ -30,8 +30,8 @@ CREATE SEQUENCE D_PLAYER_PLAYER_ID
     NOMAXVALUE;
 
 create table D_PLAYER(
-    row_id number not null,
-    player_id number not null unique,
+    row_id number not null unique,
+    player_id number not null,
     player_name varchar2(32) not null,
     password VARCHAR2(40) not null,
     mail varchar2(32) not null check (mail like '%@%'),

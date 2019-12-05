@@ -56,22 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("FIREBASE", "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-
-                        Log.d("FIREBASE", token);
-                        Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
         getSupportActionBar().hide();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoadingScreenFragment(getApplication(), getSupportActionBar())).commit();
 
@@ -82,6 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (NullPointerException e){
+            // TODO: 04-Dec-19 SOLVE NO SERVER OR INTERNET CONNECTION PROBLEM 
+            // NO SERVER OR INTERNET CONNECTION
+
         }
     }
 

@@ -15,4 +15,9 @@
     <string name="daily_challenge">daily challenge</string>
     <string name="difficulty">Difficulty</string>
     <string name="account_type">Logi Word Account</string>
+    <string name="score">Score</string>
+    <string name="word">Word</string>
+    <string name="rank">Rank</string>
+    <string name="name">Name</string>
+    <string name="global_ranking_list">Global Ranking List</string>
 </resources>

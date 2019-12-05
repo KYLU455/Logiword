@@ -25,7 +25,11 @@
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="96dp"
+            android:layout_marginEnd="53dp"
+            android:layout_toStartOf="@+id/global_score_myScore"
+            android:layout_toEndOf="@+id/global_score_name"
+            android:singleLine="true"
             android:text="myWord" />
 
         <TextView
@@ -33,8 +37,8 @@
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/global_score_rank"
-            android:layout_marginLeft="40dp"
+            android:layout_alignStart="@id/global_score_rank"
+            android:layout_marginStart="42dp"
             android:text="Bob" />
 
         <TextView

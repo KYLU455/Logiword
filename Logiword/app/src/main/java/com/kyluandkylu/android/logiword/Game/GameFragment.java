@@ -3,7 +3,6 @@ package com.kyluandkylu.android.logiword.Game;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -26,8 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.kyluandkylu.android.logiword.R;
-import com.kyluandkylu.android.logiword.Score.ScoreCalculator;
-import com.kyluandkylu.android.logiword.Game.GameViewModel;
+import com.kyluandkylu.android.logiword.GlobalScore.ScoreCalculator;
 
 import java.util.ArrayList;
 import java.util.Random;

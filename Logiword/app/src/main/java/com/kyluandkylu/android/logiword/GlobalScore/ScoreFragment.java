@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword.Score;
+package com.kyluandkylu.android.logiword.GlobalScore;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -48,7 +48,7 @@ public class ScoreFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ScoreViewModel.class);
-        mViewModel = ViewModelProviders.of(this).get(ScoreViewModel.class);
+       // mViewModel = ViewModelProviders.of(this).get(ScoreViewModel.class);
         mViewModel.getAllMyScores().observe(this, new Observer<List<ScoreModel>>() {
             @Override
             public void onChanged(List<ScoreModel> scoreModels) {

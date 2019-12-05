@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword.Score;
+package com.kyluandkylu.android.logiword.GlobalScore;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +20,17 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreHolder>
     @Override
     public ScoreHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.local_score_item, parent, false);
+                .inflate(R.layout.global_score_item, parent, false);
         return new ScoreHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ScoreHolder holder, int position) {
         ScoreModel currentScore = myScores.get(position);
-        holder.textViewMyrank.setText(String.valueOf(position + 1));
-        holder.textViewMyWord.setText(currentScore.getWordCreated());
-        holder.textViewMyScore.setText(currentScore.getStringScore());
+        holder.textViewRank.setText(String.valueOf(position + 1));
+        holder.textViewName.setText(currentScore.getPlayerName());
+        holder.textViewWord.setText(currentScore.getWordCreated());
+        holder.textViewScore.setText(currentScore.getStringScore());
     }
 
     @Override
@@ -45,15 +46,18 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreHolder>
 
 
     class ScoreHolder extends RecyclerView.ViewHolder{
-        private TextView textViewMyrank;
-        private TextView textViewMyWord;
-        private TextView textViewMyScore;
+        private TextView textViewRank;
+        private TextView textViewWord;
+        private TextView textViewScore;
+        private TextView textViewName;
 
         public ScoreHolder(View itemView){
             super(itemView);
-            textViewMyrank = itemView.findViewById(R.id.local_score_rank);
-            textViewMyWord = itemView.findViewById(R.id.local_score_word);
-            textViewMyScore = itemView.findViewById(R.id.local_score_myScore);
+            textViewRank = itemView.findViewById(R.id.global_score_rank);
+            textViewName = itemView.findViewById(R.id.global_score_name);
+            textViewWord = itemView.findViewById(R.id.global_score_word);
+            textViewScore = itemView.findViewById(R.id.global_score_myScore);
+
         }
     }
 }

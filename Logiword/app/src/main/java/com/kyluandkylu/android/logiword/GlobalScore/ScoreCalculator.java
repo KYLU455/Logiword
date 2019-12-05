@@ -1,6 +1,4 @@
-package com.kyluandkylu.android.logiword.Score;
-
-import android.content.Context;
+package com.kyluandkylu.android.logiword.GlobalScore;
 
 import com.kyluandkylu.android.logiword.Game.Calculation;
 import com.kyluandkylu.android.logiword.Game.Move;

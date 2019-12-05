@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import com.kyluandkylu.android.logiword.Score.ScoreModel;
+import com.kyluandkylu.android.logiword.GlobalScore.ScoreModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,18 +43,20 @@ public class WebService {
         return new GetTopPlayersInSinglePlayer().execute(webServiceLogiWord).get();
     }
 
-    private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord,Void,List<ScoreModel>>{
-    public ResponseBody registerUser(User user) throws ExecutionException, InterruptedException {
-        Object[] params = {webServiceLogiWord, user};
-        return new RegisterUser().execute(params).get();
-    }
-
     public Integer logIn(String userName, String password) throws ExecutionException, InterruptedException {
         Object[] params = {webServiceLogiWord, userName, password};
         return new LogIn().execute(params).get();
     }
 
-    private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord,Void,List<ScoreTableEntity>>{
+    public ResponseBody registerUser(User user) throws ExecutionException, InterruptedException {
+        Object[] params = {webServiceLogiWord, user};
+        return new RegisterUser().execute(params).get();
+    }
+
+
+    private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord,Void,List<ScoreModel>>{
+
+ //   private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord,Void,List<ScoreTableEntity>>{
 
         @Override
         protected List<ScoreModel> doInBackground(WebServiceLogiWord... webServiceLogiWords) {

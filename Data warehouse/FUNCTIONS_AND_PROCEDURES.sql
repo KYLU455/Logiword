@@ -61,7 +61,7 @@ create or replace procedure insert_daily_challenge_for_today(word varchar2)
 as
 begin
     insert into D_DAILY_CHALLENGE(ID, WORD, VALID_FROM, VALID_TO)
-    VALUES (D_DAILY_CHALLENGE_ID.nextval, word, TRUNC(sysdate + 1), TRUNC(sysdate + 2) - 1 / 86400);
+    VALUES (D_DAILY_CHALLENGE_ID.nextval, word, TRUNC(sysdate), TRUNC(sysdate + 1) - 1 / 86400);
 end insert_daily_challenge_for_today;
 
 select get_daily_challenge_for_today()

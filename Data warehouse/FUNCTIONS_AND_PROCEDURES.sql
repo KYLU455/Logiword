@@ -5,26 +5,26 @@ create or replace function get_hash (p_name  IN  VARCHAR2, p_password  IN  VARCH
     RETURN DBMS_CRYPTO.HASH(UTL_RAW.CAST_TO_RAW(p_password || p_name || l_salt),DBMS_CRYPTO.HASH_SH1);
   END get_hash;
 
-create or replace function get_daily_challenge_for_tomorrow
+create or replace function get_daily_challenge_for_today
     return varchar2 is
-    today_word        varchar2(64);
+    yesterday_word        varchar2(64);
     tomorrow_word     varchar2(64);
-    has_tomorrow_word number;
+    has_today_word number;
     row_n             number := 0;
     row_count         number;
     now               date   := sysdate;
 begin
     select count(*)
-    into has_tomorrow_word
+    into has_today_word
     from D_DAILY_CHALLENGE
-    where VALID_FROM >= TRUNC(now + 1)
-      and VALID_TO <= TRUNC(now + 2) - 1 / 86400;
-    if has_tomorrow_word = 0 then
+    where VALID_FROM >= TRUNC(now)
+      and VALID_TO <= TRUNC(now + 1) - 1 / 86400;
+    if has_today_word = 0 then
         select WORD
-        into today_word
+        into yesterday_word
         from D_DAILY_CHALLENGE
-        where VALID_FROM >= TRUNC(now)
-          and VALID_TO <= TRUNC(now + 1) - 1 / 86400;
+        where VALID_FROM >= TRUNC(now - 1)
+          and VALID_TO <= TRUNC(now) - 1 / 86400;
 
         select count(WORD_CREATED)
         into row_count
@@ -49,25 +49,26 @@ begin
                          group by WORD_CREATED
                          order by count)
                 where rownum = row_n;
-                if (tomorrow_word != today_word) then
+                if (tomorrow_word != yesterday_word) then
                     return tomorrow_word;
                 end if;
             end loop;
     end if;
     return null;
-end get_daily_challenge_for_tomorrow;
+end get_daily_challenge_for_today;
 
-create or replace procedure insert_daily_challenge_for_tomorrow(word varchar2)
+create or replace procedure insert_daily_challenge_for_today(word varchar2)
 as
 begin
     insert into D_DAILY_CHALLENGE(ID, WORD, VALID_FROM, VALID_TO)
     VALUES (D_DAILY_CHALLENGE_ID.nextval, word, TRUNC(sysdate + 1), TRUNC(sysdate + 2) - 1 / 86400);
-end insert_daily_challenge_for_tomorrow;
+end insert_daily_challenge_for_today;
 
-select get_daily_challenge_for_tomorrow()
+select get_daily_challenge_for_today()
 from dual;
 Select *
 from user_errors;
 
 --Usage example
-call INSERT_DAILY_CHALLENGE_FOR_TOMORROW(get_daily_challenge_for_tomorrow());
+call INSERT_DAILY_CHALLENGE_FOR_TODAY(get_daily_challenge_for_today());
+call INSERT_DAILY_CHALLENGE_FOR_TODAY('TEST');

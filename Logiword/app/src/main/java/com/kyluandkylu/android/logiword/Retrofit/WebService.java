@@ -21,7 +21,7 @@ public class WebService {
     private static WebService webService;
     private static final String url = "http://10.0.2.2:8080/";
 
-    public WebService(){
+    private WebService(){
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
@@ -53,10 +53,22 @@ public class WebService {
         return new RegisterUser().execute(params).get();
     }
 
+    public void sendGameResults(final GameResults gameResults){
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    webServiceLogiWord.sendGameResults(gameResults).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
+
 
     private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord,Void,List<ScoreModel>>{
-
- //   private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord,Void,List<ScoreTableEntity>>{
 
         @Override
         protected List<ScoreModel> doInBackground(WebServiceLogiWord... webServiceLogiWords) {

@@ -23,8 +23,9 @@ import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Retrofit.User;
 import com.kyluandkylu.android.logiword.Retrofit.WebService;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -82,8 +83,8 @@ public class LogInFragment extends Fragment {
                             }).show();
                 }else {
                     try {
-                        WebService webService = new WebService();
-                        Date date = new Date(Calendar.getInstance().getTime().getTime());
+                        WebService webService = WebService.getInstance();
+                        Timestamp date = new Timestamp(new Date().getTime());
                         User user = new User(-1,userName,password,mail,date);
                         webService.registerUser(user);
                         Integer token = webService.logIn(userName, password);

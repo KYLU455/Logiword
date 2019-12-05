@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
 import com.kyluandkylu.android.logiword.FriendList.FriendListFragment;
 import com.kyluandkylu.android.logiword.Game.GameFragment;
 import com.kyluandkylu.android.logiword.LoadingScreen.LoadingScreenFragment;
@@ -55,22 +56,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.nav_menu);
         }
 
-
         getSupportActionBar().hide();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoadingScreenFragment(getApplication(), getSupportActionBar())).commit();
-
-        WebService webService = new WebService();
-        try {
-            Log.d("SERVICE",  webService.getScoreTable().get(0).getPlayerName());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            // TODO: 04-Dec-19 SOLVE NO SERVER OR INTERNET CONNECTION PROBLEM 
-            // NO SERVER OR INTERNET CONNECTION
-
-        }
     }
 
 

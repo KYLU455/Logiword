@@ -1,13 +1,17 @@
 package com.kyluandkylu.android.logiword.Game;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.TreeSet;
 
 public class GameViewModel extends AndroidViewModel {
@@ -20,6 +24,7 @@ public class GameViewModel extends AndroidViewModel {
 
     private TreeSet<String> words;
     private String yourWordText;
+    private Timestamp startTime;
     private boolean justRestarted;
 
     public GameViewModel(@NonNull Application application){
@@ -35,6 +40,11 @@ public class GameViewModel extends AndroidViewModel {
         words = WordList.getInstance().getWordsTree();
         moves = new ArrayList<>();
         justRestarted = true;
+        startTime = new Timestamp(new java.util.Date().getTime());
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
     }
 
     public void removeLeftDigit(){

@@ -24,10 +24,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
+import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.GlobalScore.ScoreCalculator;
+import com.kyluandkylu.android.logiword.Retrofit.GameResults;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 public class GameFragment extends Fragment {
@@ -130,15 +137,26 @@ public class GameFragment extends Fragment {
                             if(yourWordText.equals("Your word")){
                                 difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY" , 1);
                             }
-                            double scores = ScoreCalculator.calculateScores(gameViewModel.getMoves(),gameViewModel.getCurrentLetters().getValue().size(),gameViewModel.getCurrentWord().getValue(), difficulty);
+                            final int scores = (int)ScoreCalculator.calculateScores(gameViewModel.getMoves(),gameViewModel.getCurrentLetters().getValue().size(),gameViewModel.getCurrentWord().getValue(), difficulty);
                             Log.d("SCORES",  scores + "");
                             new AlertDialog.Builder(getContext())
                                     .setTitle("Finish game")
-                                    .setMessage("Are you sure you want to finish the game?")
+                                    .setMessage("Your scores are: " + scores + "\nAre you sure you want to finish the game?")
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            // TODO: 14-Nov-19 IMPLEMENT ON WORD SUBMIT and add used letters
+                                            String token = AccountAuthentication.getToken(getContext());
+                                            if(token != null){
+                                                int playerId = Integer.parseInt(token);
+                                                if(yourWordText.equals("Your word")){
+                                                    WebService webService = WebService.getInstance();
+                                                    GameResults gameResults = new GameResults(playerId, gameViewModel.getCurrentWord().getValue(), scores,gameViewModel.getStartTime(), new Timestamp(new java.util.Date().getTime()));
+                                                    webService.sendGameResults(gameResults);
+                                                }else {
+                                                    // TODO: 05-Dec-19 IMPLEMENT ON DAILY CHALLENGE SUBMIT
+                                                }
+                                            }
+                                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenu()).commit();
                                         }
                                     }).setNegativeButton("No", null).show();
                         }

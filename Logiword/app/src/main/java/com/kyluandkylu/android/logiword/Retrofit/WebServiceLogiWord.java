@@ -16,12 +16,12 @@ public interface WebServiceLogiWord {
     @GET("singleplayer")
     Call<List<ScoreModel>> getTopPlayersInSinglePlayer();
 
-   // @GET("singleplayer/{playerID}")
-   // Call<List>
-
     @POST("account")
     Call<ResponseBody> registerUser(@Body User user);
 
     @GET("account/{userName}/{password}")
     Call<Integer> logIn(@Path("userName") String userName,@Path("password") String password);
+
+    @POST("singleplayer")
+    Call<ResponseBody> sendGameResults(@Body GameResults gameResults);
 }

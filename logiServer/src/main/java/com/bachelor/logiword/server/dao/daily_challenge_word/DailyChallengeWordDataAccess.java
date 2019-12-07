@@ -27,6 +27,10 @@ public class DailyChallengeWordDataAccess implements DailyChallengeWordDao {
             return (String) alreadyInTheTable.get(0);
         }
 
+       return generateDailyWord();
+    }
+
+    private String generateDailyWord(){
         List calculateDailyWord = em.createNativeQuery("select get_daily_challenge_for_today() " +
                 "from dual")
                 .getResultList();
@@ -38,13 +42,17 @@ public class DailyChallengeWordDataAccess implements DailyChallengeWordDao {
             return (String) calculateDailyWord.get(0);
         }
 
+        return generateFromHardcodedValue();
+    }
+
+    private String generateFromHardcodedValue(){
         List<String> lastResortWords = new ArrayList<>();
-            lastResortWords.add("merry");
-            lastResortWords.add("christmas");
-            lastResortWords.add("and");
-            lastResortWords.add("happy");
-            lastResortWords.add("new");
-            lastResortWords.add("year");
+        lastResortWords.add("merry");
+        lastResortWords.add("christmas");
+        lastResortWords.add("and");
+        lastResortWords.add("happy");
+        lastResortWords.add("new");
+        lastResortWords.add("year");
 
         List yesterdaysWord = em.createNativeQuery("select word " +
                 "from D_DAILY_CHALLENGE " +
@@ -61,8 +69,8 @@ public class DailyChallengeWordDataAccess implements DailyChallengeWordDao {
         String randWord = lastResortWords.get(randIndex);
 
         em.createNativeQuery("call INSERT_DAILY_CHALLENGE_FOR_TODAY(?)")
-            .setParameter(1, randWord)
-            .executeUpdate();
+                .setParameter(1, randWord)
+                .executeUpdate();
 
         return randWord;
     }

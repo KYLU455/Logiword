@@ -27,4 +27,8 @@ public class AccountService {
     public void updateUser(Account account) {
         accountDao.update(account);
     }
+
+    public Account accountDetails(int playerId){
+        return accountDao.accountDetails(playerId);
+    }
 }

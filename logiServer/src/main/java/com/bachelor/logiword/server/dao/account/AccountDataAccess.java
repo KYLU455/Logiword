@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository("accountEm")
 public class AccountDataAccess implements AccountDao {
@@ -54,6 +55,21 @@ public class AccountDataAccess implements AccountDao {
                 .setParameter(4, acc.getPassword())
                 .setParameter(5, acc.getMail())
                 .executeUpdate();
+
+    }
+
+    @Override
+    public Account accountDetails(int playerId) {
+        List accountList = em.createQuery("select new com.bachelor.logiword.server.model.account.Account(account.username, account.mail, account.from) from " +
+                "com.bachelor.logiword.server.model.account.Account account " +
+                "where account.playerId = " + playerId +
+                " and account.to is null", Account.class).getResultList();
+
+        if(accountList.isEmpty()){
+            return null;
+        }
+
+        return (Account) accountList.get(0);
 
     }
 }

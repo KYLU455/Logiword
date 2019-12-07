@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -46,6 +47,18 @@ public class Account implements Serializable {
         this.password = password;
         this.mail = mail;
         this.from = from;
+    }
+
+    public Account(String username, String mail, Timestamp from){
+        this.username = username;
+        this.mail = mail;
+        this.from = from;
+    }
+
+    public Account(String username, String mail, Date from){
+        this.username = username;
+        this.mail = mail;
+        this.from = new Timestamp(from.getTime());
     }
 
     public Account(@JsonProperty("playerId") int playerId,

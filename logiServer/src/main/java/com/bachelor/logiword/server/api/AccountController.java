@@ -26,6 +26,11 @@ public class AccountController {
         return accountService.login(playerName, password);
     }
 
+    @GetMapping(path = "{playerId}")
+    public Account accountDetails(@PathVariable("playerId") int playerId){
+        return accountService.accountDetails(playerId);
+    }
+
     @PutMapping
     public void updateUser(@RequestBody Account account){
         accountService.updateUser(account);

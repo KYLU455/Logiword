@@ -8,4 +8,6 @@ public interface AccountDao {
     int login(String username, String password);
 
     void update(Account acc);
+
+    Account accountDetails(int playerId);
 }

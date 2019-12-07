@@ -8,6 +8,13 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+@SqlResultSetMapping(name = "Account", classes = {
+        @ConstructorResult(targetClass = Account.class,
+            columns = {
+                @ColumnResult(name = "PASSWORD", type = String.class),
+                @ColumnResult(name = "MAIL", type = String.class)
+            })
+})
 @Entity
 @Table(name = "D_PLAYER")
 public class Account implements Serializable {
@@ -60,6 +67,11 @@ public class Account implements Serializable {
         this.username = username;
         this.mail = mail;
         this.from = new Timestamp(from.getTime());
+    }
+
+    public Account(String password, String mail) {
+        this.password = password;
+        this.mail = mail;
     }
 
     public Account(@JsonProperty("playerId") int playerId,

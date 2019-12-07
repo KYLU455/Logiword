@@ -28,6 +28,7 @@
             android:layout_gravity="top"
             android:layout_margin="15dp"
             android:text="@string/rank"
+            android:textStyle="bold"
             app:layout_anchor="@id/recycle_view_localScore" />
 
         <TextView
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|center_horizontal"
             android:text="@string/word"
+            android:textStyle="bold"
             app:layout_anchor="@id/recycle_view_localScore"
             app:layout_anchorGravity="center_horizontal" />
 
@@ -46,6 +48,7 @@
             android:layout_gravity="top"
             android:layout_margin="15dp"
             android:text="@string/score"
+            android:textStyle="bold"
             app:layout_anchor="@id/recycle_view_localScore"
             app:layout_anchorGravity="right" />
 

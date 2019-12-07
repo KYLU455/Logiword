@@ -37,20 +37,23 @@
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/global_score_myScore"
             android:layout_marginStart="164dp"
-            android:layout_marginEnd="53dp"
-            android:layout_toStartOf="@+id/global_score_myScore"
+            android:layout_marginEnd="80dp"
             android:layout_toEndOf="@+id/global_score_rank"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="myWord" />
+            android:text="myWorddddddd" />
 
         <TextView
             android:id="@+id/global_score_myScore"
             style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
+            android:textAlignment="textEnd"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="256969" />
 
     </RelativeLayout>

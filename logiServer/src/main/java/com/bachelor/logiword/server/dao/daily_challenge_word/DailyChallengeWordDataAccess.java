@@ -35,7 +35,7 @@ public class DailyChallengeWordDataAccess implements DailyChallengeWordDao {
                 "from dual")
                 .getResultList();
 
-        if(!calculateDailyWord.isEmpty()){
+        if(!calculateDailyWord.isEmpty() && calculateDailyWord.get(0) != null){
             em.createNativeQuery("call INSERT_DAILY_CHALLENGE_FOR_TODAY(?)")
                     .setParameter(1, calculateDailyWord.get(0))
                     .executeUpdate();

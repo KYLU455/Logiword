@@ -1,7 +1,6 @@
 package com.kyluandkylu.android.logiword.LocalScore;
 
 import android.app.Application;
-import android.nfc.Tag;
 import android.util.Log;
 
 import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
@@ -14,7 +13,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 public class LocalScoreViewModel extends AndroidViewModel {
     private MutableLiveData<List<LocalScoreModel>> myScoreHolder;

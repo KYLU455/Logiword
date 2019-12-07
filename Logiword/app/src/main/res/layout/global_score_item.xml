@@ -20,26 +20,30 @@
             android:maxLines="1"
             android:text="1" />
 
+
+        <TextView
+            android:id="@+id/global_score_name"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/global_score_rank"
+            android:layout_marginStart="42dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Bobbbbbbbbbbbbbb" />
+
         <TextView
             android:id="@+id/global_score_word"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="96dp"
+            android:layout_marginStart="164dp"
             android:layout_marginEnd="53dp"
             android:layout_toStartOf="@+id/global_score_myScore"
-            android:layout_toEndOf="@+id/global_score_name"
-            android:singleLine="true"
+            android:layout_toEndOf="@+id/global_score_rank"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="myWord" />
-
-        <TextView
-            android:id="@+id/global_score_name"
-            style="@style/TextAppearance.AppCompat.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/global_score_rank"
-            android:layout_marginStart="42dp"
-            android:text="Bob" />
 
         <TextView
             android:id="@+id/global_score_myScore"

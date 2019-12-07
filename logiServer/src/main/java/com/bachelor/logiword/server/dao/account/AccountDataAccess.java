@@ -2,6 +2,7 @@ package com.bachelor.logiword.server.dao.account;
 
 import com.bachelor.logiword.server.model.account.Account;
 import com.bachelor.logiword.server.model.account.AccountDetail;
+import com.bachelor.logiword.server.model.account.AccountUpdate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -42,27 +43,34 @@ public class AccountDataAccess implements AccountDao {
 
     @Override
     @Transactional
-    public void update(Account acc) {
+    public void update(AccountUpdate acc) {
         em.createNativeQuery("update D_PLAYER set VALID_TO = SYSDATE " +
                 "where PLAYER_ID = ? and VALID_TO is null ")
                 .setParameter(1, acc.getPlayerId())
                 .executeUpdate();
 
+        Account dbAccount = (Account) em.createNativeQuery("select PASSWORD, MAIL " +
+                "from D_PLAYER " +
+                "where PLAYER_ID = ?",
+                "Account")
+                .setParameter(1, acc.getPlayerId())
+                .getResultList()
+                .get(0);
+
         em.createNativeQuery("insert into D_PLAYER (ROW_ID, PLAYER_ID, PLAYER_NAME, PASSWORD, MAIL, VALID_FROM, VALID_TO) " +
-                "values (D_PLAYER_ROW_ID.nextval, ? , ?, GET_HASH(?, ?), " +
+                "values (D_PLAYER_ROW_ID.nextval, ? , ?, ?, " +
                 "?, SYSDATE, null)")
                 .setParameter(1, acc.getPlayerId())
                 .setParameter(2, acc.getUsername())
-                .setParameter(3, acc.getUsername())
-                .setParameter(4, acc.getPassword())
-                .setParameter(5, acc.getMail())
+                .setParameter(3, dbAccount.getPassword())
+                .setParameter(4, dbAccount.getMail())
                 .executeUpdate();
 
     }
 
     @Override
     public AccountDetail accountDetails(int playerId) {
-        List accountList = em.createNativeQuery("select PLAYER_NAME, MAIL, VALID_FROM " +
+        List accountList = em.createNativeQuery("select PLAYER_NAME, VALID_FROM " +
                 "from D_PLAYER " +
                 "where PLAYER_ID = ? " +
                 "and VALID_TO is null")
@@ -75,9 +83,8 @@ public class AccountDataAccess implements AccountDao {
 
         Object o = accountList.get(0);
         String username = (String) ((Object[])o)[0];
-        String mail = (String) ((Object[])o)[1];
-        Timestamp from = (Timestamp) ((Object[])o)[2];
+        Timestamp from = (Timestamp) ((Object[])o)[1];
 
-        return new AccountDetail(username, mail, from);
+        return new AccountDetail(username, from);
     }
 }

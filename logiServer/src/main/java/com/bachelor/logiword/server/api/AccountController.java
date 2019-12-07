@@ -2,6 +2,7 @@ package com.bachelor.logiword.server.api;
 
 import com.bachelor.logiword.server.model.account.Account;
 import com.bachelor.logiword.server.model.account.AccountDetail;
+import com.bachelor.logiword.server.model.account.AccountUpdate;
 import com.bachelor.logiword.server.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class AccountController {
     }
 
     @PutMapping
-    public void updateUser(@RequestBody Account account){
+    public void updateUser(@RequestBody AccountUpdate account){
         accountService.updateUser(account);
     }
 }

@@ -3,6 +3,7 @@ package com.bachelor.logiword.server.service;
 import com.bachelor.logiword.server.dao.account.AccountDao;
 import com.bachelor.logiword.server.model.account.Account;
 import com.bachelor.logiword.server.model.account.AccountDetail;
+import com.bachelor.logiword.server.model.account.AccountUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class AccountService {
         return accountDao.login(username, password);
     }
 
-    public void updateUser(Account account) {
+    public void updateUser(AccountUpdate account) {
         accountDao.update(account);
     }
 

@@ -18,4 +18,20 @@ public class User {
         this.mail = mail;
         this.from = from;
     }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getMail() {
+        return mail;
+    }
 }

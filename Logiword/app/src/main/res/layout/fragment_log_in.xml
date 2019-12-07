@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="User Name:" />
+            android:text="User Name:"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/editTextUserName"
@@ -23,14 +24,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textVisiblePassword|textNoSuggestions"/>
+            android:inputType="textVisiblePassword|textNoSuggestions"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Email:" />
+            android:text="Email:"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -38,14 +41,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/textViewPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Password:" />
+            android:text="Password:"
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -53,22 +58,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:visibility="gone"/>
 
         <Button
-            android:id="@+id/buttonLogIn"
+            android:id="@+id/buttonCreateAccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Create account" />
         <Button
-            android:id="@+id/buttonContinueWithout"
+            android:id="@+id/buttonLogIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Continue without log in"
-            android:visibility="gone"/>
-
-
+            android:text="Log in"/>
     </LinearLayout>
 </FrameLayout>

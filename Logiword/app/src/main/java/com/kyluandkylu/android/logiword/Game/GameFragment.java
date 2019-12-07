@@ -25,16 +25,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
+import com.kyluandkylu.android.logiword.GlobalScore.ScoreCalculator;
 import com.kyluandkylu.android.logiword.MainMenu.MainMenu;
 import com.kyluandkylu.android.logiword.R;
-import com.kyluandkylu.android.logiword.GlobalScore.ScoreCalculator;
+import com.kyluandkylu.android.logiword.Retrofit.DailyChallengeAttempt;
 import com.kyluandkylu.android.logiword.Retrofit.GameResults;
 import com.kyluandkylu.android.logiword.Retrofit.WebService;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Random;
 
 public class GameFragment extends Fragment {
@@ -49,11 +48,11 @@ public class GameFragment extends Fragment {
 
     private String yourWordText;
 
-    public GameFragment(){
+    public GameFragment() {
         yourWordText = "Your word";
     }
 
-    public GameFragment(String chooseWord){
+    public GameFragment(String chooseWord) {
         yourWordText = chooseWord;
     }
 
@@ -67,7 +66,7 @@ public class GameFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(!yourWordText.equals("Your word")){
+        if (!yourWordText.equals("Your word")) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(yourWordText);
         }
 
@@ -106,16 +105,16 @@ public class GameFragment extends Fragment {
         gameViewModel.getCurrentLetters().observe(this, new Observer<ArrayList<Character>>() {
             @Override
             public void onChanged(ArrayList<Character> s) {
-                if(s.size() == 0){
+                if (s.size() == 0) {
                     textViewYourLetters.setText("Your letters");
-                }else {
+                } else {
                     String letters = "";
-                    for(Character c : s){
+                    for (Character c : s) {
                         letters += c + " ";
                     }
                     letters = letters.substring(0, letters.length() - 1);
                     SpannableString spannableString = new SpannableString(letters);
-                    for(int a = 0 ; a < s.size(); a++){
+                    for (int a = 0; a < s.size(); a++) {
                         spannableString.setSpan(new LetterSelectionClickableSpan(a), a * 2, a * 2 + 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
                     textViewYourLetters.setText(spannableString);
@@ -128,17 +127,17 @@ public class GameFragment extends Fragment {
             @Override
             public void onChanged(String s) {
 
-                if(gameViewModel.isCurrentWordValid()){
+                if (gameViewModel.isCurrentWordValid()) {
                     SpannableString spannableString = new SpannableString(s);
                     spannableString.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(@NonNull View widget) {
                             int difficulty = 1;
-                            if(yourWordText.equals("Your word")){
-                                difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY" , 1);
+                            if (yourWordText.equals("Your word")) {
+                                difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY", 1);
                             }
-                            final int scores = (int)ScoreCalculator.calculateScores(gameViewModel.getMoves(),gameViewModel.getCurrentLetters().getValue().size(),gameViewModel.getCurrentWord().getValue(), difficulty);
-                            Log.d("SCORES",  scores + "");
+                            final int scores = (int) ScoreCalculator.calculateScores(gameViewModel.getMoves(), gameViewModel.getCurrentLetters().getValue().size(), gameViewModel.getCurrentWord().getValue(), difficulty);
+                            Log.d("SCORES", scores + "");
                             new AlertDialog.Builder(getContext())
                                     .setTitle("Finish game")
                                     .setMessage("Your scores are: " + scores + "\nAre you sure you want to finish the game?")
@@ -146,23 +145,25 @@ public class GameFragment extends Fragment {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             String token = AccountAuthentication.getToken(getContext());
-                                            if(token != null){
+                                            if (token != null) {
                                                 int playerId = Integer.parseInt(token);
-                                                if(yourWordText.equals("Your word")){
-                                                    WebService webService = WebService.getInstance();
-                                                    GameResults gameResults = new GameResults(playerId, gameViewModel.getCurrentWord().getValue(), scores,gameViewModel.getStartTime(), new Timestamp(new java.util.Date().getTime()));
+                                                WebService webService = WebService.getInstance();
+                                                String word = gameViewModel.getCurrentWord().getValue().toLowerCase();
+                                                if (yourWordText.equals("Your word")) {
+                                                    GameResults gameResults = new GameResults(playerId, word, scores, gameViewModel.getStartTime(), new Timestamp(new java.util.Date().getTime()));
                                                     webService.sendGameResults(gameResults);
-                                                }else {
-                                                    // TODO: 05-Dec-19 IMPLEMENT ON DAILY CHALLENGE SUBMIT
+                                                } else {
+                                                    DailyChallengeAttempt dailyChallengeAttempt = new DailyChallengeAttempt(playerId, word, scores, 'Y');
+                                                    webService.sendDailyChallengeAttempt(dailyChallengeAttempt);
                                                 }
                                             }
                                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenu()).commit();
                                         }
                                     }).setNegativeButton("No", null).show();
                         }
-                    },0, spannableString.length(),SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }, 0, spannableString.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
                     textViewYourWord.setText(spannableString);
-                }else {
+                } else {
                     textViewYourWord.setText(s);
                 }
             }
@@ -186,23 +187,25 @@ public class GameFragment extends Fragment {
 
     private void buttonClicked(Button button) {
         String buttonText = button.getText().toString();
-        if(buttonText.equals("+/-")){
+        if (buttonText.equals("+/-")) {
             gameViewModel.negateVal();
             randomizeOperations();
-        }else if(buttonText.equals("CE")){
+        } else if (buttonText.equals("CE")) {
             gameViewModel.restartVal();
             randomizeOperations();
-        }else if(buttonText.equals("R")){
+        } else if (buttonText.equals("R")) {
             gameViewModel.restartWord();
-        }else if(buttonText.equals("<<")){
-            gameViewModel.removeLeftDigit();
-            randomizeOperations();
-        }
-        else if(buttonText.equals(">>")){
-            gameViewModel.removeRightDigit();
-            randomizeOperations();
-        }
-        else {
+        } else if (buttonText.equals("<<")) {
+            if (gameViewModel.isValueLongerThenOneDigit()) {
+                gameViewModel.removeLeftDigit();
+                randomizeOperations();
+            }
+        } else if (buttonText.equals(">>")) {
+            if (gameViewModel.isValueLongerThenOneDigit()) {
+                gameViewModel.removeRightDigit();
+                randomizeOperations();
+            }
+        } else {
             String currentNumberSt = gameViewModel.getCurrentValText().getValue();
             Integer val = null;
             try {
@@ -217,24 +220,24 @@ public class GameFragment extends Fragment {
             } else if (currentNumberSt.charAt(currentNumberSt.length() - 1) >= '0'
                     && currentNumberSt.charAt(currentNumberSt.length() - 1) <= '9'
                     && val != null) {
-                if(gameViewModel.getCurrentVal().getValue() == 0){
+                if (gameViewModel.getCurrentVal().getValue() == 0) {
                     gameViewModel.changeVal(val);
                 }
             } else if (val != null) {
-                if(!(val == 0 && currentNumberSt.charAt(currentNumberSt.length() - 1) == '/')){
+                if (!(val == 0 && currentNumberSt.charAt(currentNumberSt.length() - 1) == '/')) {
                     gameViewModel.performOperation(currentNumberSt.charAt(currentNumberSt.length() - 1) + "", val);
                     randomizeOperations();
-                }else {
+                } else {
                     new AlertDialog.Builder(getContext())
                             .setTitle("VERY SERIOUS VIOLATION OF THE RULES OF THE UNIVERSE")
                             .setMessage("Please don't divide by 0")
                             .setIcon(R.drawable.ic_warning_black_24dp)
                             .setNeutralButton("I promise I won't do it again", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
+                                }
+                            }).show();
 
                 }
             } else {
@@ -260,28 +263,13 @@ public class GameFragment extends Fragment {
         return span;
     }
 
-
-    private class LetterSelectionClickableSpan extends ClickableSpan{
-
-        private int index;
-
-        public LetterSelectionClickableSpan(int index){
-            this.index = index;
-        }
-
-        @Override
-        public void onClick(@NonNull View widget) {
-            gameViewModel.selectLetter(index);
-        }
-    }
-
     private void randomizeOperations() {
         ArrayList<Button> numberButtons = new ArrayList<>();
         ArrayList<Button> operationButtons = new ArrayList<>();
         for (int a = 0; a < constraintLayoutButtons.getChildCount(); a++) {
             Button current = (Button) constraintLayoutButtons.getChildAt(a);
             current.setClickable(true);
-            current.setTextColor(Color.rgb(0,0,0));
+            current.setTextColor(Color.rgb(0, 0, 0));
             switch (current.getText().toString()) {
                 case "+":
                 case "-":
@@ -303,18 +291,32 @@ public class GameFragment extends Fragment {
         Random random = new Random();
         Button bt;
         int difficulty = 1;
-        if(yourWordText.equals("Your word")){
-            difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY" , 1);
+        if (yourWordText.equals("Your word")) {
+            difficulty = getActivity().getPreferences(Context.MODE_PRIVATE).getInt("DIFFICULTY", 1);
         }
-        for(int a = 3 + difficulty; a > 0; a--){
-            bt =  numberButtons.remove(random.nextInt(numberButtons.size()));
+        for (int a = 3 + difficulty; a > 0; a--) {
+            bt = numberButtons.remove(random.nextInt(numberButtons.size()));
             bt.setClickable(false);
-            bt.setTextColor(Color.rgb(150,150,150));
+            bt.setTextColor(Color.rgb(150, 150, 150));
         }
-        for(int a = 1 + difficulty; a > 0; a--){
-            bt =  operationButtons.remove(random.nextInt(numberButtons.size()));
+        for (int a = 1 + difficulty; a > 0; a--) {
+            bt = operationButtons.remove(random.nextInt(numberButtons.size()));
             bt.setClickable(false);
-            bt.setTextColor(Color.rgb(150,150,150));
+            bt.setTextColor(Color.rgb(150, 150, 150));
+        }
+    }
+
+    private class LetterSelectionClickableSpan extends ClickableSpan {
+
+        private int index;
+
+        public LetterSelectionClickableSpan(int index) {
+            this.index = index;
+        }
+
+        @Override
+        public void onClick(@NonNull View widget) {
+            gameViewModel.selectLetter(index);
         }
     }
 }

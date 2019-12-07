@@ -28,4 +28,10 @@ public interface WebServiceLogiWord {
 
     @POST("singleplayer")
     Call<ResponseBody> sendGameResults(@Body GameResults gameResults);
+
+    @GET("dailyword")
+    Call<ResponseBody> getDailyChallengeForToday();
+
+    @POST("challengeattempt")
+    Call<ResponseBody> sendDailyChallengeAttempt(@Body DailyChallengeAttempt dailyChallengeAttempt);
 }

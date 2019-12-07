@@ -73,6 +73,23 @@ public class WebService {
         th.start();
     }
 
+    public String getDailyChallengeForToday() throws ExecutionException, InterruptedException {
+        return new GetDailyChallengeForToday().execute(webServiceLogiWord).get();
+    }
+
+    public void sendDailyChallengeAttempt(final DailyChallengeAttempt dailyChallengeAttempt){
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    webServiceLogiWord.sendDailyChallengeAttempt(dailyChallengeAttempt).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
 
     private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord, Void, List<ScoreModel>> {
 
@@ -126,6 +143,19 @@ public class WebService {
             Integer playerId = (Integer) objects[1];
             try {
                 return webServiceLogiWord.getLocalScoreTable(playerId).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class GetDailyChallengeForToday extends AsyncTask<WebServiceLogiWord, Void, String>{
+
+        @Override
+        protected String doInBackground(WebServiceLogiWord... webServiceLogiWords) {
+            try {
+                return webServiceLogiWords[0].getDailyChallengeForToday().execute().body().string();
             } catch (IOException e) {
                 e.printStackTrace();
             }

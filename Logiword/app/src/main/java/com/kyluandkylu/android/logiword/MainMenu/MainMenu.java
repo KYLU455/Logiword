@@ -17,6 +17,9 @@ import android.widget.Button;
 
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Game.GameFragment;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainMenu extends Fragment {
 
@@ -64,8 +67,15 @@ public class MainMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-                // TODO: 20-Nov-19 add get day
-                ft.replace(R.id.fragment_container, new GameFragment("day")).addToBackStack(null).commit();
+                WebService webService = WebService.getInstance();
+                try {
+                    String word = webService.getDailyChallengeForToday();
+                    ft.replace(R.id.fragment_container, new GameFragment(word)).addToBackStack(null).commit();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -67,6 +67,11 @@ public class GameViewModel extends AndroidViewModel {
         }
     }
 
+    public boolean isValueLongerThenOneDigit(){
+        String v = Integer.toString(currentVal.getValue());
+        return v.length() > 1;
+    }
+
     public MutableLiveData<String> getCurrentWord() {
         return currentWord;
     }

@@ -1,6 +1,7 @@
 package com.bachelor.logiword.server.dao.account;
 
 import com.bachelor.logiword.server.model.account.Account;
+import com.bachelor.logiword.server.model.account.AccountDetail;
 
 public interface AccountDao {
     void register(Account acc);
@@ -9,5 +10,5 @@ public interface AccountDao {
 
     void update(Account acc);
 
-    Account accountDetails(int playerId);
+    AccountDetail accountDetails(int playerId);
 }

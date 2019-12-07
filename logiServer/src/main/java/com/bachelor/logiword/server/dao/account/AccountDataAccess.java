@@ -1,12 +1,14 @@
 package com.bachelor.logiword.server.dao.account;
 
 import com.bachelor.logiword.server.model.account.Account;
+import com.bachelor.logiword.server.model.account.AccountDetail;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository("accountEm")
@@ -59,17 +61,23 @@ public class AccountDataAccess implements AccountDao {
     }
 
     @Override
-    public Account accountDetails(int playerId) {
-        List accountList = em.createQuery("select new com.bachelor.logiword.server.model.account.Account(account.username, account.mail, account.from) from " +
-                "com.bachelor.logiword.server.model.account.Account account " +
-                "where account.playerId = " + playerId +
-                " and account.to is null", Account.class).getResultList();
+    public AccountDetail accountDetails(int playerId) {
+        List accountList = em.createNativeQuery("select PLAYER_NAME, MAIL, VALID_FROM " +
+                "from D_PLAYER " +
+                "where PLAYER_ID = ? " +
+                "and VALID_TO is null")
+                .setParameter(1, playerId)
+                .getResultList();
 
         if(accountList.isEmpty()){
             return null;
         }
 
-        return (Account) accountList.get(0);
+        Object o = accountList.get(0);
+        String username = (String) ((Object[])o)[0];
+        String mail = (String) ((Object[])o)[1];
+        Timestamp from = (Timestamp) ((Object[])o)[2];
 
+        return new AccountDetail(username, mail, from);
     }
 }

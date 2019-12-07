@@ -1,5 +1,6 @@
 package com.bachelor.logiword.server.model.account;
 
+import com.bachelor.logiword.server.model.single_player.SinglePlayerGameDataWithPlayerName;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;

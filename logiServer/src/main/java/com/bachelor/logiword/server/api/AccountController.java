@@ -1,6 +1,7 @@
 package com.bachelor.logiword.server.api;
 
 import com.bachelor.logiword.server.model.account.Account;
+import com.bachelor.logiword.server.model.account.AccountDetail;
 import com.bachelor.logiword.server.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class AccountController {
     }
 
     @GetMapping(path = "{playerId}")
-    public Account accountDetails(@PathVariable("playerId") int playerId){
+    public AccountDetail accountDetails(@PathVariable("playerId") int playerId){
         return accountService.accountDetails(playerId);
     }
 

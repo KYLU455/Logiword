@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,7 +27,7 @@ public class WebService {
     private static WebService webService;
     private static final String url = "http://10.0.2.2:8080/";
 
-    private WebService(){
+    private WebService() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
@@ -61,12 +64,12 @@ public class WebService {
         return new GetPrivateScoresForSinglePlayer().execute(params).get();
     }
 
-    public ProfileModel getMyProfileInformation(int myPlayerID) throws ExecutionException, InterruptedException{
+    public ProfileModel getMyProfileInformation(int myPlayerID) throws ExecutionException, InterruptedException {
         Object[] params = {webServiceLogiWord, myPlayerID};
         return new GetMyProfileInformation().execute(params).get();
     }
 
-    public void sendGameResults(final GameResults gameResults){
+    public void sendGameResults(final GameResults gameResults) {
         Thread th = new Thread() {
             @Override
             public void run() {
@@ -80,16 +83,32 @@ public class WebService {
         th.start();
     }
 
-    public ChangeProfileInformationModel changeUserName(int myPlayerID, String username)throws ExecutionException, InterruptedException{
+ /*   public ChangeProfileInformationModel changeUserName(int myPlayerID, String username)throws ExecutionException, InterruptedException{
         Object[] params = {webServiceLogiWord, myPlayerID, username};
         return new ChangeUserName().execute(params).get();
+    } */
+
+    public void changeUserName(ChangeProfileInformationModel changeProfileInformationModel) throws ExecutionException, InterruptedException {
+        Call<ChangeProfileInformationModel> call = webServiceLogiWord.setNewUserName(changeProfileInformationModel);
+
+        call.enqueue(new Callback<ChangeProfileInformationModel>() {
+            @Override
+            public void onResponse(Call<ChangeProfileInformationModel> call, Response<ChangeProfileInformationModel> response) {
+                ChangeProfileInformationModel userResponse = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ChangeProfileInformationModel> call, Throwable t) {
+
+            }
+        });
     }
 
     public String getDailyChallengeForToday() throws ExecutionException, InterruptedException {
         return new GetDailyChallengeForToday().execute(webServiceLogiWord).get();
     }
 
-    public void sendDailyChallengeAttempt(final DailyChallengeAttempt dailyChallengeAttempt){
+    public void sendDailyChallengeAttempt(final DailyChallengeAttempt dailyChallengeAttempt) {
         Thread th = new Thread() {
             @Override
             public void run() {
@@ -162,7 +181,7 @@ public class WebService {
         }
     }
 
-    private class GetMyProfileInformation extends AsyncTask<Object, Void, ProfileModel>{
+    private class GetMyProfileInformation extends AsyncTask<Object, Void, ProfileModel> {
 
         @Override
         protected ProfileModel doInBackground(Object... objects) {
@@ -177,7 +196,7 @@ public class WebService {
         }
     }
 
-    private class ChangeUserName extends AsyncTask<Object, Void, ChangeProfileInformationModel>{
+  /*  private class ChangeUserName extends AsyncTask<Object, Void, ChangeProfileInformationModel> {
 
         @Override
         protected ChangeProfileInformationModel doInBackground(Object... objects) {
@@ -191,9 +210,9 @@ public class WebService {
             }
             return null;
         }
-    }
+    }*/
 
-    private class GetDailyChallengeForToday extends AsyncTask<WebServiceLogiWord, Void, String>{
+    private class GetDailyChallengeForToday extends AsyncTask<WebServiceLogiWord, Void, String> {
 
         @Override
         protected String doInBackground(WebServiceLogiWord... webServiceLogiWords) {

@@ -36,7 +36,7 @@ public interface WebServiceLogiWord {
     Call<ProfileModel> getMyProfile(@Path("myPlayerID") int myPlayerID);
 
     @PUT("account")
-    Call<ChangeProfileInformationModel> setNewUserName(@Path("myPlayerID") int myPlayerID, @Path("username") String username);
+    Call<ChangeProfileInformationModel> setNewUserName(@Body ChangeProfileInformationModel changeProfileInformationModel);
 
     @GET("dailyword")
     Call<ResponseBody> getDailyChallengeForToday();

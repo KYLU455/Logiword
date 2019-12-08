@@ -35,7 +35,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
     }
 
-    public void setMyUsername(String username) throws ExecutionException, InterruptedException {
-        myUsername.setValue(webService.changeUserName(Integer.parseInt(AccountAuthentication.getToken(getApplication().getBaseContext())),username));
+    public void setMyUsername(ChangeProfileInformationModel changeProfileInformationModel) throws ExecutionException, InterruptedException {
+        webService.changeUserName(changeProfileInformationModel);
     }
 }

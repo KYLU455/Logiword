@@ -1,6 +1,7 @@
 package com.bachelor.logiword.server.dao.friend;
 
 import com.bachelor.logiword.server.model.friend.FriendPair;
+import com.bachelor.logiword.server.model.friend.FriendResponse;
 
 import java.util.List;
 
@@ -10,5 +11,7 @@ public interface FriendDao {
 
     List getFriendRequests(int playerId);
 
-//    void responseToRequest()
+    void responseToRequest(FriendResponse response);
+
+    List getFriends(int playerId);
 }

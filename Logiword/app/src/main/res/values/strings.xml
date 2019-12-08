@@ -26,4 +26,6 @@
     <string name="settings">Settings</string>
     <string name="friend_list">Friend List</string>
     <string name="single_player">Single Player</string>
+    <string name="change_username">Change Username</string>
+    <string name="type_your_new_user_name_here">Type your new user name here</string>
 </resources>

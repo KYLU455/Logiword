@@ -7,6 +7,8 @@ import com.google.gson.GsonBuilder;
 
 import com.kyluandkylu.android.logiword.GlobalScore.ScoreModel;
 import com.kyluandkylu.android.logiword.LocalScore.LocalScoreModel;
+import com.kyluandkylu.android.logiword.Profile.ChangeProfileInformationModel;
+import com.kyluandkylu.android.logiword.Profile.ProfileModel;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,6 +61,11 @@ public class WebService {
         return new GetPrivateScoresForSinglePlayer().execute(params).get();
     }
 
+    public ProfileModel getMyProfileInformation(int myPlayerID) throws ExecutionException, InterruptedException{
+        Object[] params = {webServiceLogiWord, myPlayerID};
+        return new GetMyProfileInformation().execute(params).get();
+    }
+
     public void sendGameResults(final GameResults gameResults){
         Thread th = new Thread() {
             @Override
@@ -71,6 +78,11 @@ public class WebService {
             }
         };
         th.start();
+    }
+
+    public ChangeProfileInformationModel changeUserName(int myPlayerID, String username)throws ExecutionException, InterruptedException{
+        Object[] params = {webServiceLogiWord, myPlayerID, username};
+        return new ChangeUserName().execute(params).get();
     }
 
     public String getDailyChallengeForToday() throws ExecutionException, InterruptedException {
@@ -143,6 +155,37 @@ public class WebService {
             Integer playerId = (Integer) objects[1];
             try {
                 return webServiceLogiWord.getLocalScoreTable(playerId).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class GetMyProfileInformation extends AsyncTask<Object, Void, ProfileModel>{
+
+        @Override
+        protected ProfileModel doInBackground(Object... objects) {
+            WebServiceLogiWord webServiceLogiWord = (WebServiceLogiWord) objects[0];
+            Integer playerId = (Integer) objects[1];
+            try {
+                return webServiceLogiWord.getMyProfile(playerId).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class ChangeUserName extends AsyncTask<Object, Void, ChangeProfileInformationModel>{
+
+        @Override
+        protected ChangeProfileInformationModel doInBackground(Object... objects) {
+            WebServiceLogiWord webServiceLogiWord = (WebServiceLogiWord) objects[0];
+            Integer playerId = (Integer) objects[1];
+            String username = (String) objects[2];
+            try {
+                return webServiceLogiWord.setNewUserName(playerId, username).execute().body();
             } catch (IOException e) {
                 e.printStackTrace();
             }

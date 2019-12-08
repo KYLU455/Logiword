@@ -34,4 +34,8 @@ public class FriendService {
     public List getFriends(int playerId){
         return friendDao.getFriends(playerId);
     }
+
+    public void removeFriend(FriendPair request){
+        friendDao.removeFriend(request);
+    }
 }

@@ -14,4 +14,6 @@ public interface FriendDao {
     void responseToRequest(FriendResponse response);
 
     List getFriends(int playerId);
+
+    void removeFriend(FriendPair request);
 }

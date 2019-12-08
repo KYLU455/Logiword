@@ -38,4 +38,9 @@ public class FriendController {
     public List getFriends(@PathVariable("playerId") int playerId){
         return friendService.getFriends(playerId);
     }
+
+    @DeleteMapping
+    public void removeFriend(@RequestBody FriendPair pair){
+        friendService.removeFriend(pair);
+    }
 }

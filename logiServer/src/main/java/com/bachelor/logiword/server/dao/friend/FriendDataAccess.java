@@ -70,18 +70,11 @@ public class FriendDataAccess implements FriendDao {
             return;
         }
 
-        List requestIds = em.createNativeQuery("select FRIEND_REQUEST_ID from F_FRIEND frnd " +
-                "where frnd.PLAYER1_ID = ? " +
-                "and frnd.PLAYER2_ID = ?")
-                .setParameter(1, friendId)
-                .setParameter(2, response.getPlayerId())
-                .getResultList();
+        int requestId = findRequestId(response.getPlayerId(), friendId);
 
-        if(requestIds.isEmpty()){
+        if(requestId == -1){
             return;
         }
-
-        int requestId = ((BigDecimal)requestIds.get(0)).intValue();
 
         if(sysdate == null) {
             em.createNativeQuery("update D_FRIEND_REQUEST " +
@@ -109,7 +102,8 @@ public class FriendDataAccess implements FriendDao {
                 "on frnd.PLAYER1_ID = plyr.PLAYER_ID " +
                 "and plyr.VALID_TO is null " +
                 "and frnd.PLAYER2_ID = ? " +
-                "and req.STATUS = 'ACCEPTED'")
+                "and req.STATUS = 'ACCEPTED' " +
+                "and req.VALID_TO is null ")
                 .setParameter(1, playerId)
                 .getResultList();
 
@@ -120,7 +114,8 @@ public class FriendDataAccess implements FriendDao {
                 "on frnd.PLAYER2_ID = plyr.PLAYER_ID " +
                 "and plyr.VALID_TO is null " +
                 "and frnd.PLAYER1_ID = ? " +
-                "and req.STATUS = 'ACCEPTED'")
+                "and req.STATUS = 'ACCEPTED' " +
+                "and req.VALID_TO is null ")
                 .setParameter(1, playerId)
                 .getResultList();
 
@@ -128,9 +123,38 @@ public class FriendDataAccess implements FriendDao {
         return firstPartOfFriends;
     }
 
+    @Transactional
+    @Override
+    public void removeFriend(FriendPair request) {
+        int friendId = findPlayerId(request.getFriendName());
+
+        if(friendId == -1){
+            return;
+        }
+
+        int requestId = findRequestId(request.getPlayerId(), friendId);
+
+        if(requestId == -1){
+            requestId = findRequestId(friendId, request.getPlayerId());
+
+            if(requestId == -1){
+                return;
+            }
+        }
+
+        em.createNativeQuery("update D_FRIEND_REQUEST " +
+                "set VALID_TO = sysdate " +
+                "where ID = ? " +
+                "and STATUS = 'ACCEPTED' " +
+                "and VALID_TO is null ")
+                .setParameter(1, requestId)
+                .executeUpdate();
+    }
+
     private int findPlayerId(String name){
         List playerIds = em.createNativeQuery("select PLAYER_ID from D_PLAYER " +
-                "where PLAYER_NAME = ?")
+                "where PLAYER_NAME = ? " +
+                "and VALID_TO is null")
                 .setParameter(1, name)
                 .getResultList();
 
@@ -139,5 +163,20 @@ public class FriendDataAccess implements FriendDao {
         }
 
         return ((BigDecimal)playerIds.get(0)).intValue();
+    }
+
+    private int findRequestId(int playerId, int friendId){
+        List requestIds = em.createNativeQuery("select FRIEND_REQUEST_ID from F_FRIEND frnd " +
+                "where frnd.PLAYER1_ID = ? " +
+                "and frnd.PLAYER2_ID = ?")
+                .setParameter(1, friendId)
+                .setParameter(2, playerId)
+                .getResultList();
+
+        if(requestIds.isEmpty()){
+            return -1;
+        }
+
+        return ((BigDecimal)requestIds.get(0)).intValue();
     }
 }

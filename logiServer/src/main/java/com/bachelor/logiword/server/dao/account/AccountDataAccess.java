@@ -70,20 +70,29 @@ public class AccountDataAccess implements AccountDao {
 
     @Override
     public AccountDetail accountDetails(int playerId) {
-        List accountList = em.createNativeQuery("select PLAYER_NAME, VALID_FROM " +
+        List nameList = em.createNativeQuery("select PLAYER_NAME " +
                 "from D_PLAYER " +
                 "where PLAYER_ID = ? " +
                 "and VALID_TO is null")
                 .setParameter(1, playerId)
                 .getResultList();
 
-        if(accountList.isEmpty()){
+        // The registration date should be the oldest date
+        List dateList = em.createNativeQuery("select VALID_FROM from " +
+                "(select VALID_FROM " +
+                "from D_PLAYER " +
+                "where PLAYER_ID = ? " +
+                "order by VALID_FROM) " +
+                "where ROWNUM <= 1")
+                .setParameter(1, playerId)
+                .getResultList();
+
+        if(nameList.isEmpty() || dateList.isEmpty()){
             return null;
         }
 
-        Object o = accountList.get(0);
-        String username = (String) ((Object[])o)[0];
-        Timestamp from = (Timestamp) ((Object[])o)[1];
+        String username = (String) nameList.get(0);
+        Timestamp from = (Timestamp) dateList.get(0);
 
         return new AccountDetail(username, from);
     }

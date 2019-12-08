@@ -4,6 +4,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -11,30 +13,33 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class FriendListViewModel extends ViewModel {
-    private MutableLiveData<List<FriendModel>> friendListHolder;
+
+    private MutableLiveData<FriendModel[]> friends;
+    private MutableLiveData<Stack<FriendRequest>> friendRequests;
 
     public FriendListViewModel(){
-      //  friendListHolder = new FriendModel("Pista", 456, "online");
-        friendListHolder = new MediatorLiveData<>();
-        friendListHolder.setValue(new ArrayList<FriendModel>());
-        friendListHolder.getValue().add(new FriendModel("Pityu", 4569, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu2", 4769, "offline"));
-        friendListHolder.getValue().add(new FriendModel("Pityu3", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu4", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu5", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu6", 4969, "offline"));
-        friendListHolder.getValue().add(new FriendModel("Pityu7", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu8", 4969, "offline"));
-        friendListHolder.getValue().add(new FriendModel("Pityu9", 4969, "online"));
-        friendListHolder.setValue(friendListHolder.getValue());
+        friends = new MutableLiveData<>();
+        FriendModel[] friendModels = {new FriendModel("MY BEST FRIEND")};
+        friends.setValue(friendModels);
+
+        friendRequests = new MutableLiveData<>();
+        friendRequests.setValue(new Stack<FriendRequest>());
     }
 
-    public LiveData<List<FriendModel>> getAllFriend() {
-        return friendListHolder;
+    public MutableLiveData<FriendModel[]> getFriends() {
+        return friends;
     }
 
-    public void addFriend(String name) {
-        friendListHolder.getValue().add(new FriendModel(name, 4569, "offline"));
-        friendListHolder.setValue(friendListHolder.getValue());
+    public MutableLiveData<Stack<FriendRequest>> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void acceptFriend(){
+        FriendRequest friendRequest = friendRequests.getValue().pop();
+        friendRequests.setValue(friendRequests.getValue());
+    }
+
+    public void rejectFriend(){
+
     }
 }

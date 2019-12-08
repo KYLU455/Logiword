@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_menu"
             android:title="@string/menu" />
         <item
-            android:id="@+id/nav_single_player"
-            android:icon="@drawable/ic_single_player"
-            android:title="@string/single_player" />
-        <item
             android:id="@+id/nav_scores"
             android:icon="@drawable/ic_scores_icon"
             android:title="@string/global_scores" />

@@ -36,9 +36,6 @@ public class FriendListFragment extends Fragment {
     private FriendAdapter friendAdapter;
     private Button addFriendButton;
     private EditText getFriendEditText;
-    public static FriendListFragment newInstance() {
-        return new FriendListFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

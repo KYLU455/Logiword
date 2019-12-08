@@ -85,10 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FriendListFragment()).commit();
                 toolbar.setTitle(R.string.friendListString);
                 break;
-            case R.id.nav_single_player:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new GameFragment()).commit();
-                toolbar.setTitle(R.string.singlePlayerString);
-                break;
             case R.id.nav_local_scores:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LocalScoreFragment()).commit();
                 toolbar.setTitle(R.string.localScoresString);

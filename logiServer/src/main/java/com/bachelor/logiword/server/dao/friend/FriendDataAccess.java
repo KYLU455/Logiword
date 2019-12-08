@@ -47,7 +47,8 @@ public class FriendDataAccess implements FriendDao {
                 "inner join D_PLAYER plyr " +
                 "on frnd.PLAYER1_ID = plyr.PLAYER_ID " +
                 "and plyr.VALID_TO is null " +
-                "and frnd.PLAYER2_ID = ?")
+                "and frnd.PLAYER2_ID = ? " +
+                "and req.STATUS is null ")
                 .setParameter(1, playerId)
                 .getResultList();
     }

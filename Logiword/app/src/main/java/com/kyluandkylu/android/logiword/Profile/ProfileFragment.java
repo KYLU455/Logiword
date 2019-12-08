@@ -36,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private EditText newUsername;
     private Button changeUsername;
     WebService webService;
+    String temporaryUsername;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -59,6 +60,7 @@ public class ProfileFragment extends Fragment {
             public void onChanged(ProfileModel profileModel) {
                 myName.setText("Name: " + profileModel.getUsername());
                 myRegistrationDate.setText("Registered at: " + profileModel.getFrom());
+                temporaryUsername = profileModel.getUsername();
             }
         });
 
@@ -68,11 +70,17 @@ public class ProfileFragment extends Fragment {
                 webService = WebService.getInstance();
                 try {
                     String newUserName = newUsername.getText().toString();
-                    mViewModel.setMyUsername(new ChangeProfileInformationModel(Integer.parseInt(AccountAuthentication.getToken(getContext())), newUserName));
-                    Toast toast = Toast.makeText(getContext(), "The username is changed to " + newUserName, Toast.LENGTH_LONG);
-                    toast.show();
+                    if (!newUserName.equals(temporaryUsername)) {
+                        mViewModel.setMyUsername(new ChangeProfileInformationModel(Integer.parseInt(AccountAuthentication.getToken(getContext())), newUserName));
+                        Toast toast = Toast.makeText(getContext(), "The username is changed to " + newUserName, Toast.LENGTH_LONG);
+                        toast.show();
 
-                    myName.setText("Name: " + newUserName);
+                        myName.setText("Name: " + newUserName);
+                        temporaryUsername = newUserName;
+                    } else {
+                        Toast toast2 = Toast.makeText(getContext(), "You typed the same username", Toast.LENGTH_LONG);
+                        toast2.show();
+                    }
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

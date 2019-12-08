@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
 import com.kyluandkylu.android.logiword.Game.GameViewModel;
 import com.kyluandkylu.android.logiword.R;
+import com.kyluandkylu.android.logiword.Retrofit.FriendPair;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
 
 import java.util.List;
 import java.util.Stack;
@@ -41,6 +46,9 @@ public class FriendListFragment extends Fragment {
     private ImageButton imageButtonAcceptInvitation;
     private ImageButton imageButtonRejectInvitation;
     private RelativeLayout relativeLayoutFriendRequest;
+    private TextView textViewFriendName;
+    private Button buttonAddFriend;
+    private EditText editTextFriendName;
 
 
     @Override
@@ -59,13 +67,13 @@ public class FriendListFragment extends Fragment {
         recyclerView.hasFixedSize();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        friendListViewModel.getFriends().observe(this, new Observer<FriendModel[]>() {
+        friendListViewModel.getFriends().observe(this, new Observer<String[]>() {
             @Override
-            public void onChanged(FriendModel[] friendModels) {
+            public void onChanged(String[] friendModels) {
                 adapter = new FriendAdapter(friendModels, new FriendAdapter.OnListItemClickListener() {
                     @Override
                     public void onListItemClick(int clickedItemIndex) {
-                        Log.d("CLICKED", "CLICKED");
+                        friendListViewModel.removeFriend(clickedItemIndex);
                     }
                 });
                 recyclerView.setAdapter(adapter);
@@ -73,22 +81,46 @@ public class FriendListFragment extends Fragment {
         });
 
         relativeLayoutFriendRequest = view.findViewById(R.id.relativeLayoutFriendRequest);
+        textViewFriendName = view.findViewById(R.id.textViewFriendName);
 
-        friendListViewModel.getFriendRequests().observe(this, new Observer<Stack<FriendRequest>>() {
+        friendListViewModel.getFriendRequests().observe(this, new Observer<Stack<String>>() {
             @Override
-            public void onChanged(Stack<FriendRequest> friendRequests) {
+            public void onChanged(Stack<String> friendRequests) {
                 if(friendRequests.isEmpty()){
                     relativeLayoutFriendRequest.setVisibility(View.INVISIBLE);
                 }else {
                     relativeLayoutFriendRequest.setVisibility(View.VISIBLE);
+                    textViewFriendName.setText(friendListViewModel.getFriendRequests().getValue().peek());
                 }
             }
         });
 
         imageButtonAcceptInvitation = view.findViewById(R.id.imageButtonAcceptFriend);
+        imageButtonAcceptInvitation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                friendListViewModel.respondToFriendRequest("ACCEPTED");
+            }
+        });
+
         imageButtonRejectInvitation = view.findViewById(R.id.imageButtonRejectFriend);
+        imageButtonRejectInvitation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                friendListViewModel.respondToFriendRequest("REJECTED");
+            }
+        });
 
-
+        editTextFriendName = view.findViewById(R.id.friend_edit_text_view);
+        buttonAddFriend = view.findViewById(R.id.friend_add_button);
+        buttonAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                friendListViewModel.sendFriendRequest(editTextFriendName.getText().toString());
+                closeSoftKeyboard();
+                Toast.makeText(getContext(),"Request to " + editTextFriendName.getText().toString() +" sent",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void closeSoftKeyboard(){

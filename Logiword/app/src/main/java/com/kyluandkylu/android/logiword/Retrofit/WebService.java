@@ -83,10 +83,6 @@ public class WebService {
         th.start();
     }
 
- /*   public ChangeProfileInformationModel changeUserName(int myPlayerID, String username)throws ExecutionException, InterruptedException{
-        Object[] params = {webServiceLogiWord, myPlayerID, username};
-        return new ChangeUserName().execute(params).get();
-    } */
 
     public void changeUserName(ChangeProfileInformationModel changeProfileInformationModel) throws ExecutionException, InterruptedException {
         Call<ChangeProfileInformationModel> call = webServiceLogiWord.setNewUserName(changeProfileInformationModel);
@@ -120,6 +116,88 @@ public class WebService {
             }
         };
         th.start();
+    }
+
+    public String[] getFriendList(int id) throws ExecutionException, InterruptedException {
+        Object[] params = {webServiceLogiWord, id};
+        return new GetFriendList().execute(params).get();
+    }
+
+    public String[] getFriendRequests(int id) throws ExecutionException, InterruptedException {
+        Object[] params = {webServiceLogiWord, id};
+        return new GetFriendRequests().execute(params).get();
+    }
+
+    public void sendFriendRequest(final FriendPair friendPair){
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    webServiceLogiWord.sendFriendRequest(friendPair).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
+
+    public void respondToFriendRequest(final FriendResponse friendResponse){
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    webServiceLogiWord.respondToFriendRequest(friendResponse).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
+
+    public void removeFriend(final FriendPair friendPair){
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    webServiceLogiWord.removeFriend(friendPair).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
+
+    private class GetFriendRequests extends AsyncTask<Object, Void , String[]>{
+
+        @Override
+        protected String[] doInBackground(Object... objects) {
+            WebServiceLogiWord webServiceLogiWord = (WebServiceLogiWord) objects[0];
+            Integer id = (Integer) objects[1];
+            try {
+                return webServiceLogiWord.getFriendRequestes(id).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class GetFriendList extends AsyncTask<Object, Void , String[]>{
+
+        @Override
+        protected String[] doInBackground(Object... objects) {
+            WebServiceLogiWord webServiceLogiWord = (WebServiceLogiWord) objects[0];
+            Integer id = (Integer) objects[1];
+            try {
+                return webServiceLogiWord.getFriendList(id).execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     private class GetTopPlayersInSinglePlayer extends AsyncTask<WebServiceLogiWord, Void, List<ScoreModel>> {
@@ -195,22 +273,6 @@ public class WebService {
             return null;
         }
     }
-
-  /*  private class ChangeUserName extends AsyncTask<Object, Void, ChangeProfileInformationModel> {
-
-        @Override
-        protected ChangeProfileInformationModel doInBackground(Object... objects) {
-            WebServiceLogiWord webServiceLogiWord = (WebServiceLogiWord) objects[0];
-            Integer playerId = (Integer) objects[1];
-            String username = (String) objects[2];
-            try {
-                return webServiceLogiWord.setNewUserName(playerId, username).execute().body();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }*/
 
     private class GetDailyChallengeForToday extends AsyncTask<WebServiceLogiWord, Void, String> {
 

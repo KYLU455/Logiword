@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
 
-    private FriendModel[] friends;
+    private String[] friends;
     private OnListItemClickListener onClickListener;
 
-    public FriendAdapter(FriendModel[] friends, OnListItemClickListener onClickListener) {
+    public FriendAdapter(String[] friends, OnListItemClickListener onClickListener) {
         this.friends = friends;
         this.onClickListener = onClickListener;
     }
@@ -35,7 +35,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
     @Override
     public void onBindViewHolder(@NonNull FriendHolder holder, int position) {
-        holder.textViewName.setText(friends[position].getName());
+        holder.textViewName.setText(friends[position]);
     }
 
     @Override

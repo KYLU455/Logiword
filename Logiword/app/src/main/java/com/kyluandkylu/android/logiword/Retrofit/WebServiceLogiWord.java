@@ -10,7 +10,9 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -43,4 +45,20 @@ public interface WebServiceLogiWord {
 
     @POST("challengeattempt")
     Call<ResponseBody> sendDailyChallengeAttempt(@Body DailyChallengeAttempt dailyChallengeAttempt);
+
+    @GET("friends/{playerId}")
+    Call<String[]> getFriendList(@Path("playerId") int playerId);
+
+    @GET("friends/requests/{playerId}")
+    Call<String[]> getFriendRequestes(@Path("playerId") int playerId);
+
+    @POST("friends")
+    Call<ResponseBody> sendFriendRequest (@Body FriendPair friendPair);
+
+    @PUT("friends")
+    Call<ResponseBody> respondToFriendRequest(@Body FriendResponse friendResponse);
+
+    @HTTP(method = "DELETE", path = "friends", hasBody = true)
+    Call<ResponseBody> removeFriend(@Body FriendPair friendPair);
+
 }

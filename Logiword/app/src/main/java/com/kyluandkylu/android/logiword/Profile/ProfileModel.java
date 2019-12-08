@@ -6,7 +6,7 @@ public class ProfileModel {
     private String from;
 
 
-    public ProfileModel(String username, String mail, String from){
+    public ProfileModel(String username, String from) {
         this.username = username;
         this.from = from;
     }
@@ -20,14 +20,4 @@ public class ProfileModel {
         return from;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-        notifyAll();
-    }
-
-
-    public void setFrom(String from) {
-        this.from = from;
-        notifyAll();
-    }
 }

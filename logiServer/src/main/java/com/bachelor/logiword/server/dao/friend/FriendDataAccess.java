@@ -3,6 +3,7 @@ package com.bachelor.logiword.server.dao.friend;
 import com.bachelor.logiword.server.model.friend.Friend;
 import com.bachelor.logiword.server.model.friend.FriendPair;
 import com.bachelor.logiword.server.model.friend.FriendRequest;
+import com.bachelor.logiword.server.model.friend.FriendResponse;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,18 +22,14 @@ public class FriendDataAccess implements FriendDao {
     @Transactional
     @Override
     public void makeFriendRequest(FriendPair request) {
-        List friendIds = em.createNativeQuery("select PLAYER_ID from D_PLAYER " +
-                "where PLAYER_NAME = ?")
-                .setParameter(1, request.getFriendName())
-                .getResultList();
+        int friendId = findPlayerId(request.getFriendName());
 
-        if(friendIds.isEmpty()){
+        if(friendId == -1){
             return;
         }
 
-        int friendId = ((BigDecimal)friendIds.get(0)).intValue();
-
         Timestamp now = new Timestamp(System.currentTimeMillis());
+
         FriendRequest friendRequest = new FriendRequest(null, now, null);
 
         em.persist(friendRequest);
@@ -53,5 +50,94 @@ public class FriendDataAccess implements FriendDao {
                 "and frnd.PLAYER2_ID = ?")
                 .setParameter(1, playerId)
                 .getResultList();
+    }
+
+    @Transactional
+    @Override
+    public void responseToRequest(FriendResponse response) {
+        int friendId = findPlayerId(response.getFriendName());
+
+        if(friendId == -1){
+            return;
+        }
+
+        Timestamp sysdate = null;
+
+        String status = response.getResponse().toUpperCase();
+        if(status.equals("REJECTED")){
+            sysdate = new Timestamp(System.currentTimeMillis());
+        } else if(!status.equals("ACCEPTED")){
+            return;
+        }
+
+        List requestIds = em.createNativeQuery("select FRIEND_REQUEST_ID from F_FRIEND frnd " +
+                "where frnd.PLAYER1_ID = ? " +
+                "and frnd.PLAYER2_ID = ?")
+                .setParameter(1, friendId)
+                .setParameter(2, response.getPlayerId())
+                .getResultList();
+
+        if(requestIds.isEmpty()){
+            return;
+        }
+
+        int requestId = ((BigDecimal)requestIds.get(0)).intValue();
+
+        if(sysdate == null) {
+            em.createNativeQuery("update D_FRIEND_REQUEST " +
+                    "set STATUS = ? " +
+                    "where ID = ?")
+                    .setParameter(1, status)
+                    .setParameter(2, requestId)
+                    .executeUpdate();
+        } else {
+            em.createNativeQuery("update D_FRIEND_REQUEST " +
+                    "set STATUS = ?, VALID_TO = ? " +
+                    "where ID = ?")
+                    .setParameter(1, status)
+                    .setParameter(2, sysdate)
+                    .setParameter(3, requestId)
+                    .executeUpdate();
+        }
+    }
+
+    public List getFriends(int playerId){
+        List firstPartOfFriends = em.createNativeQuery("select PLAYER_NAME from D_FRIEND_REQUEST req " +
+                "inner join F_FRIEND frnd " +
+                "on req.ID = frnd.FRIEND_REQUEST_ID " +
+                "inner join D_PLAYER plyr " +
+                "on frnd.PLAYER1_ID = plyr.PLAYER_ID " +
+                "and plyr.VALID_TO is null " +
+                "and frnd.PLAYER2_ID = ? " +
+                "and req.STATUS = 'ACCEPTED'")
+                .setParameter(1, playerId)
+                .getResultList();
+
+        List secondPartOfFriends = em.createNativeQuery("select PLAYER_NAME from D_FRIEND_REQUEST req " +
+                "inner join F_FRIEND frnd " +
+                "on req.ID = frnd.FRIEND_REQUEST_ID " +
+                "inner join D_PLAYER plyr " +
+                "on frnd.PLAYER2_ID = plyr.PLAYER_ID " +
+                "and plyr.VALID_TO is null " +
+                "and frnd.PLAYER1_ID = ? " +
+                "and req.STATUS = 'ACCEPTED'")
+                .setParameter(1, playerId)
+                .getResultList();
+
+        firstPartOfFriends.addAll(secondPartOfFriends);
+        return firstPartOfFriends;
+    }
+
+    private int findPlayerId(String name){
+        List playerIds = em.createNativeQuery("select PLAYER_ID from D_PLAYER " +
+                "where PLAYER_NAME = ?")
+                .setParameter(1, name)
+                .getResultList();
+
+        if(playerIds.isEmpty()){
+            return -1;
+        }
+
+        return ((BigDecimal)playerIds.get(0)).intValue();
     }
 }

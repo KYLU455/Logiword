@@ -25,10 +25,6 @@ public class LocalScoreFragment extends Fragment {
     private RecyclerView recyclerView;
     private LocalScoreAdapter localScoreAdapter;
 
-    public static LocalScoreFragment newInstance() {
-        return new LocalScoreFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

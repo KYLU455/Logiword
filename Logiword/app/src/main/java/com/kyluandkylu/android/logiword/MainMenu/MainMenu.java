@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.kyluandkylu.android.logiword.R;
 import com.kyluandkylu.android.logiword.Game.GameFragment;
@@ -27,15 +28,17 @@ public class MainMenu extends Fragment {
     private FragmentTransaction ft;
     private Button singleButton;
     private Button dailyChallengeButton;
+    private Button multiPlayerButton;
 
-    public static MainMenu newInstance() {
-        return new MainMenu();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_menu_fragment, container, false);
+        View v = inflater.inflate(R.layout.main_menu_fragment, container, false);
+
+
+        multiPlayerButton = v.findViewById(R.id.multi_player_button);
+        return v;
 
     }
 
@@ -43,8 +46,8 @@ public class MainMenu extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(MainMenuViewModel.class);
-        // TODO: Use the ViewModel
-        //toolbar.findViewById(R.id.toolbar);
+
+
 
     }
 
@@ -76,6 +79,14 @@ public class MainMenu extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        multiPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getContext(), "The Multiplayer is not yet been implemented", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }

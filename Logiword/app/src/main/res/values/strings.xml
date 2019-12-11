@@ -28,4 +28,6 @@
     <string name="single_player">Single Player</string>
     <string name="change_username">Change Username</string>
     <string name="type_your_new_user_name_here">Type your new user name here</string>
+    <string name="logiword">LogiWord</string>
+    <string name="info_logiword_com">info@logiword.com</string>
 </resources>

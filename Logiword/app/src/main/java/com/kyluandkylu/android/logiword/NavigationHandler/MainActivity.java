@@ -1,4 +1,4 @@
-package com.kyluandkylu.android.logiword.View;
+package com.kyluandkylu.android.logiword.NavigationHandler;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;

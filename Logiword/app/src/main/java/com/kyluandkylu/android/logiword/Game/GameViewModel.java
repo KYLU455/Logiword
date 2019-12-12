@@ -20,8 +20,8 @@ public class GameViewModel extends AndroidViewModel {
     private MutableLiveData<String> currentValText;
     private MutableLiveData<ArrayList<Character>> currentLetters;
     private MutableLiveData<String> currentWord;
-    private ArrayList<Move> moves;
 
+    private ArrayList<Move> moves;
     private TreeSet<String> words;
     private String yourWordText;
     private Timestamp startTime;
@@ -161,7 +161,6 @@ public class GameViewModel extends AndroidViewModel {
                 currentVal.setValue(v * val);
                 break;
             case "/":
-                // TODO: 20-Nov-19 Remove 0
                 if(val != 0){
                     currentVal.setValue(v / val);
                 }

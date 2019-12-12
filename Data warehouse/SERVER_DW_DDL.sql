@@ -1,5 +1,3 @@
-
-
 drop sequence D_PLAYER_PLAYER_ID;
 drop sequence D_PLAYER_ROW_ID;
 drop sequence D_MULTIPLAYER_GAME_ID;
@@ -50,7 +48,7 @@ CREATE SEQUENCE D_FRIEND_REQUEST_ID
 
 create table D_FRIEND_REQUEST(
     id number not null,
-    status varchar2(32)  check (status in ('ACCEPTED', 'REJECTED') or status is null),
+    status varchar2(8)  check (status in ('ACCEPTED', 'REJECTED') or status is null),
     valid_from date not null,
     valid_to date,
     constraint d_friend_request_id_pk primary key (id)

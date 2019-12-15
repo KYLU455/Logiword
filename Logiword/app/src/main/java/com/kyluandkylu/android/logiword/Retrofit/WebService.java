@@ -177,7 +177,7 @@ public class WebService {
             WebServiceLogiWord webServiceLogiWord = (WebServiceLogiWord) objects[0];
             Integer id = (Integer) objects[1];
             try {
-                return webServiceLogiWord.getFriendRequestes(id).execute().body();
+                return webServiceLogiWord.getFriendRequests(id).execute().body();
             } catch (IOException e) {
                 e.printStackTrace();
             }

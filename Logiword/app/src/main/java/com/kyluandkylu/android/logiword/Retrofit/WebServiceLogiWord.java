@@ -50,7 +50,7 @@ public interface WebServiceLogiWord {
     Call<String[]> getFriendList(@Path("playerId") int playerId);
 
     @GET("friends/requests/{playerId}")
-    Call<String[]> getFriendRequestes(@Path("playerId") int playerId);
+    Call<String[]> getFriendRequests(@Path("playerId") int playerId);
 
     @POST("friends")
     Call<ResponseBody> sendFriendRequest (@Body FriendPair friendPair);

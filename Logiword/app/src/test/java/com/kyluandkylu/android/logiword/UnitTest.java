@@ -22,7 +22,7 @@ public class UnitTest {
         fakeMoves.add(new LetterSetChange('M'));
         fakeMoves.add(new LetterSetChange('A'));
         fakeMoves.add(new Calculation("+", 6 , 6));
-        fakeMoves.add(new Calculation( "CE", 12, 0));
+        fakeMoves.add(new Calculation("CE", 12, 0));
         fakeMoves.add(new Calculation("^", 8, 8));
         fakeMoves.add(new Calculation("<<", 16777216, 1677721));
         fakeMoves.add(new Calculation("<<", 1677721, 16777));

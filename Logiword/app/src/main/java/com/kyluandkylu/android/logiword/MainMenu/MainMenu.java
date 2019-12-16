@@ -24,7 +24,6 @@ import java.util.concurrent.ExecutionException;
 
 public class MainMenu extends Fragment {
 
-    private MainMenuViewModel mViewModel;
     private FragmentTransaction ft;
     private Button singleButton;
     private Button dailyChallengeButton;
@@ -45,10 +44,6 @@ public class MainMenu extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainMenuViewModel.class);
-
-
-
     }
 
     @Override

@@ -23,7 +23,9 @@ public class SinglePlayerDataAccess implements SinglePlayerDao {
         em.persist(interval);
         em.flush();
 
-        SinglePlayerGameData gameData = new SinglePlayerGameData(interval.getId(), game.getPlayerId(), game.getWordCreated(), game.getScore());
+        SinglePlayerGameData gameData = new SinglePlayerGameData(
+                interval.getId(), game.getPlayerId(), game.getWordCreated(), game.getScore()
+        );
         em.persist(gameData);
 
         return 1;

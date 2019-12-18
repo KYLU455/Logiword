@@ -88,13 +88,13 @@ public class WebService {
     }
 
 
-    public void changeUserName(ChangeProfileInformationModel changeProfileInformationModel) throws ExecutionException, InterruptedException {
+    public void changeUserName(ChangeProfileInformationModel changeProfileInformationModel) {
         Call<ChangeProfileInformationModel> call = webServiceLogiWord.setNewUserName(changeProfileInformationModel);
 
         call.enqueue(new Callback<ChangeProfileInformationModel>() {
             @Override
             public void onResponse(Call<ChangeProfileInformationModel> call, Response<ChangeProfileInformationModel> response) {
-                ChangeProfileInformationModel userResponse = response.body();
+
             }
 
             @Override

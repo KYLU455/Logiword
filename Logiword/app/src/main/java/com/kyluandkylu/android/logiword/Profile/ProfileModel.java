@@ -1,10 +1,8 @@
 package com.kyluandkylu.android.logiword.Profile;
 
 public class ProfileModel {
-
     private String username;
     private String from;
-
 
     public ProfileModel(String username, String from) {
         this.username = username;

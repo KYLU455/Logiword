@@ -25,10 +25,6 @@ public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
-    }
-
     private TextView myName;
     private TextView myRegistrationDate;
     private EditText newUsername;

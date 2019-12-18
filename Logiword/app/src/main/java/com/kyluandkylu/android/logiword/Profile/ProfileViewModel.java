@@ -15,7 +15,6 @@ import java.util.concurrent.ExecutionException;
 
 public class ProfileViewModel extends AndroidViewModel {
     private MutableLiveData<ProfileModel> myProfile;
-    private MutableLiveData<ChangeProfileInformationModel> myUsername;
     private WebService webService;
 
     public ProfileViewModel(@NonNull Application context) throws ExecutionException, InterruptedException {

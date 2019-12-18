@@ -13,14 +13,6 @@ public class LocalScoreModel {
         this.score = score;
     }
 
-    public int getGameId() {
-        return gameId;
-    }
-
-    public int getPlayerId() {
-        return playerId;
-    }
-
     public String getWordCreated() {
         return wordCreated;
     }

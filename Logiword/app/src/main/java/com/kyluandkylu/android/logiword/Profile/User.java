@@ -18,10 +18,6 @@ public class User {
         this.from = from;
     }
 
-    public int getPlayerId() {
-        return playerId;
-    }
-
     public String getUsername() {
         return username;
     }

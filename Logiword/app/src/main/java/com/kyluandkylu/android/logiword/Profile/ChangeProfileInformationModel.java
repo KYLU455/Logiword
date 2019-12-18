@@ -9,11 +9,4 @@ public class ChangeProfileInformationModel {
         this.username = username;
     }
 
-    public int getPlayerId() {
-        return playerId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
 }

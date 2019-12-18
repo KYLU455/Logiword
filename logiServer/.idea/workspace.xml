@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="493a7d44-fd9b-4fe6-ad51-a999204b34fd" name="Default Changelist" comment="Merge branch 'develop' of https://github.com/KYLU455/Logiword into develop&#10;&#10;# Conflicts:&#10;#&#9;Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendListFragment.java">
+      <change afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/Retrofit/FriendPair.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/Retrofit/FriendResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Data warehouse/FUNCTIONS_AND_PROCEDURES.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Data warehouse/FUNCTIONS_AND_PROCEDURES.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendListViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendListViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/FriendList/FriendRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/Retrofit/WebService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/Retrofit/WebService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/Retrofit/WebServiceLogiWord.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Logiword/app/src/main/java/com/kyluandkylu/android/logiword/Retrofit/WebServiceLogiWord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Logiword/app/src/main/res/layout/friend_list_fragment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Logiword/app/src/main/res/layout/friend_list_fragment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1U17yDFHIWTdAq8PDoAt4N3jODw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Gits\Logiword\logiServer" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.ServerApplication">
+    <configuration name="DatabaseConnectionTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.bachelor.logiword.server.database.DatabaseConnectionTest" />
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.bachelor.logiword.server.database.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.bachelor.logiword.server.ServerApplication" />
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.bachelor.logiword.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ServerApplication" />
+        <item itemvalue="Application.DatabaseConnectionTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="493a7d44-fd9b-4fe6-ad51-a999204b34fd" name="Default Changelist" comment="" />
+      <created>1574512499305</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1574512499305</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

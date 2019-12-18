@@ -1,40 +1,85 @@
 package com.kyluandkylu.android.logiword.FriendList;
 
-import android.widget.Toast;
+import android.app.Application;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class FriendListViewModel extends ViewModel {
-    private MutableLiveData<List<FriendModel>> friendListHolder;
+import com.kyluandkylu.android.logiword.Authentication.AccountAuthentication;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
 
-    public FriendListViewModel(){
-      //  friendListHolder = new FriendModel("Pista", 456, "online");
-        friendListHolder = new MediatorLiveData<>();
-        friendListHolder.setValue(new ArrayList<FriendModel>());
-        friendListHolder.getValue().add(new FriendModel("Pityu", 4569, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu2", 4769, "offline"));
-        friendListHolder.getValue().add(new FriendModel("Pityu3", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu4", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu5", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu6", 4969, "offline"));
-        friendListHolder.getValue().add(new FriendModel("Pityu7", 4969, "online"));
-        friendListHolder.getValue().add(new FriendModel("Pityu8", 4969, "offline"));
-        friendListHolder.getValue().add(new FriendModel("Pityu9", 4969, "online"));
-        friendListHolder.setValue(friendListHolder.getValue());
+import java.util.Stack;
+import java.util.concurrent.ExecutionException;
+
+public class FriendListViewModel extends AndroidViewModel {
+
+    private MutableLiveData<String[]> friends;
+    private MutableLiveData<Stack<String>> friendRequests;
+    private int id;
+    private WebService webService;
+
+    public FriendListViewModel(@NonNull Application application) {
+        super(application);
+        webService = WebService.getInstance();
+
+        friends = new MutableLiveData<>();
+        friends.setValue(new String[0]);
+        friendRequests = new MutableLiveData<>();
+        friendRequests.setValue(new Stack<String>());
+        id = Integer.parseInt(AccountAuthentication.getToken(application));
+        try {
+            friends.setValue(webService.getFriendList(id));
+            String[] friendReq = webService.getFriendRequests(id);
+            for (String s : friendReq) {
+                friendRequests.getValue().push(s);
+            }
+            friendRequests.setValue(friendRequests.getValue());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public MutableLiveData<List<FriendModel>> getAllFriend() {
-        return friendListHolder;
+    public MutableLiveData<String[]> getFriends() {
+        return friends;
     }
 
-    public void addFriend(String name) {
-        friendListHolder.getValue().add(new FriendModel(name, 4569, "offline"));
-        friendListHolder.setValue(friendListHolder.getValue());
+    public MutableLiveData<Stack<String>> getFriendRequests() {
+        return friendRequests;
+    }
+
+    public void respondToFriendRequest(String status) {
+        String friendName = friendRequests.getValue().pop();
+        WebService webService = WebService.getInstance();
+        webService.respondToFriendRequest(new FriendResponseModel(id, friendName, status));
+        friendRequests.setValue(friendRequests.getValue());
+        if (status.equals("ACCEPTED")) {
+            String[] f = new String[friends.getValue().length + 1];
+            for (int a = 0; a < friends.getValue().length; a++) {
+                f[a] = friends.getValue()[a];
+            }
+            f[friends.getValue().length] = friendName;
+            friends.setValue(f);
+        }
+    }
+
+    public void sendFriendRequest(String friendName) {
+        webService.sendFriendRequest(new FriendPairModel(id, friendName));
+    }
+
+    public void removeFriend(int index) {
+        String toRemove = friends.getValue()[index];
+        webService.removeFriend(new FriendPairModel(id, toRemove));
+        String[] f = new String[friends.getValue().length - 1];
+        for (int a = 0; a < index; a++) {
+            f[a] = friends.getValue()[a];
+        }
+        for (int a = index + 1; a < f.length; a++) {
+            f[a] = friends.getValue()[a];
+        }
+        friends.setValue(f);
     }
 }

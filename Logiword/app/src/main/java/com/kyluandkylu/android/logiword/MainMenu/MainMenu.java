@@ -1,53 +1,52 @@
 package com.kyluandkylu.android.logiword.MainMenu;
 
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.app.AlertDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.kyluandkylu.android.logiword.Game.GameFragment;
 import com.kyluandkylu.android.logiword.R;
-import com.kyluandkylu.android.logiword.View.GameFragment;
+import com.kyluandkylu.android.logiword.Retrofit.WebService;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainMenu extends Fragment {
 
-    private MainMenuViewModel mViewModel;
     private FragmentTransaction ft;
     private Button singleButton;
     private Button dailyChallengeButton;
+    private Button multiPlayerButton;
 
-    public static MainMenu newInstance() {
-        return new MainMenu();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_menu_fragment, container, false);
+        View v = inflater.inflate(R.layout.main_menu_fragment, container, false);
+
+
+        multiPlayerButton = v.findViewById(R.id.multi_player_button);
+        return v;
 
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainMenuViewModel.class);
-        // TODO: Use the ViewModel
-        //toolbar.findViewById(R.id.toolbar);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Logi Word");
         ft = getFragmentManager().beginTransaction();
         singleButton = view.findViewById(R.id.single_player_button);
         singleButton.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +62,23 @@ public class MainMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-                // TODO: 20-Nov-19 add get day
-                ft.replace(R.id.fragment_container, new GameFragment("day")).addToBackStack(null).commit();
+                WebService webService = WebService.getInstance();
+                try {
+                    String word = webService.getDailyChallengeForToday();
+                    ft.replace(R.id.fragment_container, new GameFragment(word)).addToBackStack(null).commit();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        multiPlayerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getContext(), "The Multiplayer is not yet been implemented", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
     }

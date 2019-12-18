@@ -1,66 +1,63 @@
 package com.kyluandkylu.android.logiword.FriendList;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.kyluandkylu.android.logiword.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kyluandkylu.android.logiword.R;
+
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
-    private List<FriendModel> friends = new ArrayList<>();
+
+    private String[] friends;
+    private OnListItemClickListener onClickListener;
+
+    public FriendAdapter(String[] friends, OnListItemClickListener onClickListener) {
+        this.friends = friends;
+        this.onClickListener = onClickListener;
+    }
 
     @NonNull
     @Override
-    public FriendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.friend_item, parent, false);
-        return new FriendHolder(itemView);
+    public FriendAdapter.FriendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.friend_item, parent, false);
+        return new FriendHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FriendHolder holder, int position) {
-        FriendModel currentFriend = friends.get(position);
-        holder.textViewName.setText(currentFriend.getName());
-        holder.textViewScore.setText(currentFriend.scoreToString());
-        holder.textViewStatus.setText(currentFriend.getStatus());
-
-        if(currentFriend.getStatus().equalsIgnoreCase("online")){
-            holder.textViewStatus.setTextColor(Color.GREEN);
-        }
-        else {
-            holder.textViewStatus.setTextColor(Color.RED);
-        }
+        holder.textViewName.setText(friends[position]);
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return friends.length;
     }
 
-    public void setFriends(List<FriendModel> friends){
-        this.friends = friends;
-        notifyDataSetChanged();
 
-    }
-
-    class FriendHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName;
-        private TextView textViewScore;
-        private TextView textViewStatus;
+    protected class FriendHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView textViewName;
+        ImageButton imageButtonRemoveFriend;
 
         public FriendHolder(@NonNull View itemView) {
             super(itemView);
             textViewName = itemView.findViewById(R.id.friend_view_name);
-            textViewScore = itemView.findViewById(R.id.friend_view_score);
-            textViewStatus = itemView.findViewById(R.id.friend_view_status);
+            imageButtonRemoveFriend = itemView.findViewById(R.id.imageButtonRemoveFriend);
+            imageButtonRemoveFriend.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onClickListener.onListItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
     }
 }

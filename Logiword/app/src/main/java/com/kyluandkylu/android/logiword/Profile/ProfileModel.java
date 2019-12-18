@@ -2,18 +2,22 @@ package com.kyluandkylu.android.logiword.Profile;
 
 public class ProfileModel {
 
-    private int playerID;
-    private String playerName;
-    private String playerPassword;
-    private String playerEmail;
+    private String username;
+    private String from;
 
 
-    public ProfileModel(int playerID, String playerName, String playerPassword, String playerEmail){
-        this.playerID = playerID;
-        this.playerName = playerName;
-        this.playerPassword = playerPassword;
-        this.playerEmail = playerEmail;
+    public ProfileModel(String username, String from) {
+        this.username = username;
+        this.from = from;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getFrom() {
+        from = from.substring(0, 10);
+        return from;
+    }
 
 }

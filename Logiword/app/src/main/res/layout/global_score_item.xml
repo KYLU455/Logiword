@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/global_score_rank"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="1" />
+
+
+        <TextView
+            android:id="@+id/global_score_name"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/global_score_rank"
+            android:layout_marginStart="42dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Bobbbbbbbbbbbbbb" />
+
+        <TextView
+            android:id="@+id/global_score_word"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/global_score_myScore"
+            android:layout_marginStart="164dp"
+            android:layout_marginEnd="80dp"
+            android:layout_toEndOf="@+id/global_score_rank"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="myWorddddddd" />
+
+        <TextView
+            android:id="@+id/global_score_myScore"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="80dp"
+            android:textAlignment="textEnd"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="256969" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
